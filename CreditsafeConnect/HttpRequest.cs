@@ -13,7 +13,7 @@ namespace CreditsafeConnect
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Class  <c>HttpRequest</c> handles all HTTP traffic and authentication between the caller and the Creditsafe API.
+    /// Handles all HTTP traffic and authentication between the caller and the Creditsafe API.
     /// </summary>
     public class HttpRequest
     {
@@ -54,7 +54,7 @@ namespace CreditsafeConnect
                 BaseAddress = new Uri(baseAddress),
             };
 
-            this.client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(this.Authenticate(username, password).GetAwaiter().GetResult());
+            this.client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(this.Authenticate(username, password).GetAwaiter().GetResult().Token);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace CreditsafeConnect
         /// <exception cref="HttpRequestException">
         /// Thrown when the http response status code is not successful.
         /// </exception>
-        private async Task<string> Authenticate(string username, string password)
+        private async Task<AuthToken> Authenticate(string username, string password)
         {
             AuthRequest authRequest = new AuthRequest
             {
@@ -120,7 +120,7 @@ namespace CreditsafeConnect
 
             response.EnsureSuccessStatusCode();
 
-            return response.Content.ReadAsStringAsync().Result;
+            return JsonConvert.DeserializeObject<AuthToken>(response.Content.ReadAsStringAsync().Result);
         }
     }
 }
