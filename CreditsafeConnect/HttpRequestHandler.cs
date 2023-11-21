@@ -1,4 +1,4 @@
-﻿// <copyright file="HttpRequest.cs" company="Multitube Engineering B.V.">
+﻿// <copyright file="HttpRequestHandler.cs" company="Multitube Engineering B.V.">
 // Copyright (c) Multitube Engineering B.V. All rights reserved.
 // </copyright>
 
@@ -15,13 +15,13 @@ namespace CreditsafeConnect
     /// <summary>
     /// Handles all HTTP traffic and authentication between the caller and the Creditsafe API.
     /// </summary>
-    public class HttpRequest
+    public class HttpRequestHandler
     {
         private readonly HttpClient client;
         private readonly string authEndpoint;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HttpRequest"/> class and authenticates to the Creditsafe API
+        /// Initializes a new instance of the <see cref="HttpRequestHandler"/> class and authenticates to the Creditsafe API
         /// using the provided <paramref name="authEndpoint"/>, <paramref name="username"/>, and <paramref name="password"/>.
         /// </summary>
         /// <param name="baseAddress">Base address URI of the Creditsafe API.</param>
@@ -31,7 +31,7 @@ namespace CreditsafeConnect
         /// <exception cref="ArgumentException">
         /// Thrown when one of the arguments provided is invalid.
         /// </exception>
-        public HttpRequest(string baseAddress, string authEndpoint, string username, string password)
+        public HttpRequestHandler(string baseAddress, string authEndpoint, string username, string password)
         {
             if (string.IsNullOrWhiteSpace(baseAddress)) throw new ArgumentException("BaseAddress value was invalid.");
             if (string.IsNullOrWhiteSpace(authEndpoint)) throw new ArgumentException("AuthEndpoint value was invalid.");
@@ -54,6 +54,7 @@ namespace CreditsafeConnect
                 BaseAddress = new Uri(baseAddress),
             };
 
+            Task.Run(async () => await this.Authenticate(username, password));
             this.client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(this.Authenticate(username, password).GetAwaiter().GetResult().Token);
         }
 
