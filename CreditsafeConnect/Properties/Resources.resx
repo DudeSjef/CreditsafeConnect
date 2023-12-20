@@ -118,15 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Password" xml:space="preserve">
-    <value>Multitube01</value>
-  </data>
-  <data name="SandboxUrl" xml:space="preserve">
-    <value>https://connect.sandbox.creditsafe.com/v1/</value>
+    <value>FVJMdsBdLs'zHE32CeVX</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>https://connect.creditsafe.com/v1/</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Multitube</value>
+    <value>daan.thelen0@gmail.com</value>
   </data>
 </root>

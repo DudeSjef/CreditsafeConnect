@@ -61,20 +61,11 @@ namespace CreditsafeConnect.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multitube01.
+        ///   Looks up a localized string similar to FVJMdsBdLs&apos;zHE32CeVX.
         /// </summary>
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to https://connect.sandbox.creditsafe.com/v1/.
-        /// </summary>
-        internal static string SandboxUrl {
-            get {
-                return ResourceManager.GetString("SandboxUrl", resourceCulture);
             }
         }
         
@@ -88,7 +79,7 @@ namespace CreditsafeConnect.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Multitube.
+        ///   Looks up a localized string similar to daan.thelen0@gmail.com.
         /// </summary>
         internal static string Username {
             get {

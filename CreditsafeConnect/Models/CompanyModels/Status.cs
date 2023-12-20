@@ -2,7 +2,7 @@
 // Copyright (c) Multitube Engineering B.V. All rights reserved.
 // </copyright>
 
-namespace CreditsafeConnect.Models
+namespace CreditsafeConnect.Models.CompanyModels
 {
     /// <summary>
     /// Represents a company status.

@@ -2,7 +2,7 @@
 // Copyright (c) Multitube Engineering B.V. All rights reserved.
 // </copyright>
 
-namespace CreditsafeConnect.Models
+namespace CreditsafeConnect.Models.CompanyModels
 {
     /// <summary>
     /// Class with brief company information.
@@ -25,7 +25,7 @@ namespace CreditsafeConnect.Models
         public string RegNo { get; set; }
 
         /// <summary>
-        /// Gets or sets the company VAT number.
+        /// Gets or sets the company VAT number(s).
         /// </summary>
         public string[] VatNo { get; set; }
 
@@ -50,7 +50,7 @@ namespace CreditsafeConnect.Models
         public OfficeType OfficeType { get; set; }
 
         /// <summary>
-        /// Gets or sets the phone numbers registered to the company.
+        /// Gets or sets the company phone number(s).
         /// </summary>
         public string[] PhoneNumbers { get; set; }
 
