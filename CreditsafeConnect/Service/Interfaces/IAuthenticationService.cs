@@ -16,9 +16,7 @@ namespace CreditsafeConnect.Service.Interfaces
         /// Calls the Authenticate method in the repository layer and returns an authentication token.
         /// </summary>
         /// <param name="endpoint">URI of the authenticate endpoint.</param>
-        /// <param name="username">Username for authenticating to the authentication endpoint.</param>
-        /// <param name="password">Password for authenticating to the authentication endpoint.</param>
         /// <returns>An authentication token.</returns>
-        Task<AuthenticationToken> Authenticate(string endpoint, string username, string password);
+        Task<AuthenticationToken> Authenticate(string endpoint);
     }
 }

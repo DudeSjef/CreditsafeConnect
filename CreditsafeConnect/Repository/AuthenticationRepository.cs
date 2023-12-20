@@ -8,13 +8,13 @@ namespace CreditsafeConnect.Repository
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
     using CreditsafeConnect.Repository.Interfaces;
-    using CreditsafeConnect.Service;
-    using CreditsafeConnect.Service.Interfaces;
+    using CreditsafeConnect.Service.HttpClients;
+    using CreditsafeConnect.Service.HttpClients.Interfaces;
 
     /// <inheritdoc cref="IAuthenticationRepository"/>
     internal class AuthenticationRepository : IAuthenticationRepository
     {
-        private readonly ICreditsafeHttpClient creditsafeHttpClient;
+        private readonly IAuthenticationHttpClient authenticationHttpClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationRepository"/> class.
@@ -23,17 +23,17 @@ namespace CreditsafeConnect.Repository
         {
             HttpClient httpClient = new HttpClient();
 
-            this.creditsafeHttpClient = new CreditsafeHttpClient(httpClient);
+            this.authenticationHttpClient = new AuthenticationHttpClient(httpClient);
         }
 
         /// <summary>
-        /// Calls the <see cref="CreditsafeHttpClient.Authenticate"/> method in the <see cref="CreditsafeHttpClient"/>.
+        /// Calls the <see cref="AuthenticationHttpClient.Authenticate"/> method in the <see cref="AuthenticationHttpClient"/>.
         /// </summary>
         /// <param name="authenticationRequest">Request object containing all the information necessary to send an authentication request.</param>
         /// <returns>An asynchronous operation.</returns>
         public async Task<AuthenticationToken> Authenticate(Request authenticationRequest)
         {
-            return await this.creditsafeHttpClient.Authenticate(authenticationRequest);
+            return await this.authenticationHttpClient.Authenticate(authenticationRequest);
         }
     }
 }

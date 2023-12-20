@@ -7,6 +7,7 @@ namespace CreditsafeConnect.Repository.Interfaces
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.CompanyModels;
 
     /// <summary>
     /// Data access class for brief company information.<br/><br/>
@@ -15,7 +16,7 @@ namespace CreditsafeConnect.Repository.Interfaces
     internal interface ICompanyRepository
     {
         /// <summary>
-        /// Calls the <see cref="Service.CreditsafeHttpClient.GetCompanies"/> method in the <see cref="Service.CreditsafeHttpClient"/>.
+        /// Calls the <see cref="Service.HttpClients.CompanyHttpClient.GetCompanies"/> method in the <see cref="Service.HttpClients.CompanyHttpClient"/>.
         /// </summary>
         /// <param name="getCompaniesRequest">Request object with company search criteria in the request parameter.</param>
         /// <returns>List of <see cref="Company"/>.</returns>

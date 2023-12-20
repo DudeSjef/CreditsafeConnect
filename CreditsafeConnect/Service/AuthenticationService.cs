@@ -6,6 +6,7 @@ namespace CreditsafeConnect.Service
 {
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
+    using CreditsafeConnect.Properties;
     using CreditsafeConnect.Repository;
     using CreditsafeConnect.Repository.Interfaces;
     using CreditsafeConnect.Service.Interfaces;
@@ -19,15 +20,13 @@ namespace CreditsafeConnect.Service
         /// Calls the Authenticate method in the repository layer.
         /// </summary>
         /// <param name="endpoint">URI of the authenticate endpoint.</param>
-        /// <param name="username">Username for authenticating to the authentication endpoint.</param>
-        /// <param name="password">Password for authenticating to the authentication endpoint.</param>
         /// <returns>An asynchronous operation.</returns>
-        public async Task<AuthenticationToken> Authenticate(string endpoint, string username, string password)
+        public async Task<AuthenticationToken> Authenticate(string endpoint)
         {
             object login = new
             {
-                username,
-                password,
+                Resources.Username,
+                Resources.Password,
             };
 
             RequestBuilder requestBuilder = new RequestBuilder();
