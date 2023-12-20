@@ -35,6 +35,6 @@ namespace CreditsafeConnect.Models
         /// <summary>
         /// Gets or sets the authentication token.
         /// </summary>
-        internal AuthenticationHeaderValue AuthenticationToken { get; set; }
+        internal AuthenticationHeaderValue AuthenticationHeader { get; set; }
     }
 }
