@@ -21,19 +21,15 @@ namespace CreditsafeConnect.Controllers
         /// Calls the <see cref="AuthenticationService.Authenticate"/> method in the <see cref="AuthenticationService"/>.
         /// </summary>
         /// <param name="endpoint">URI of the authenticate endpoint.</param>
-        /// <param name="username">Username for authenticating to the authentication endpoint.</param>
-        /// <param name="password">Password for authenticating to the authentication endpoint.</param>
         /// <returns>An asynchronous operation.</returns>
         /// <exception cref="ArgumentException">
         /// Thrown when one of the arguments is empty.
         /// </exception>
-        public async Task<AuthenticationToken> Authenticate(string endpoint, string username, string password)
+        public async Task<AuthenticationToken> Authenticate(string endpoint)
         {
             if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");
-            if (string.IsNullOrWhiteSpace(username)) throw new ArgumentException("Username cannot be empty.");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Password cannot be empty");
 
-            return await this.authenticationService.Authenticate(endpoint, username, password);
+            return await this.authenticationService.Authenticate(endpoint);
         }
     }
 }

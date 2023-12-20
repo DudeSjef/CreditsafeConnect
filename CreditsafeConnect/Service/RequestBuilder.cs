@@ -23,7 +23,7 @@ namespace CreditsafeConnect.Service
         /// </summary>
         /// <param name="endpoint">URI of the endpoint.</param>
         /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property Endpoint set to the value of <paramref name="endpoint"/>.</returns>
-        public RequestBuilder Endpoint(string endpoint)
+        internal RequestBuilder Endpoint(string endpoint)
         {
             endpoint = endpoint.Trim();
 
@@ -42,7 +42,7 @@ namespace CreditsafeConnect.Service
         /// </summary>
         /// <param name="obj">Payload to be sent in the request.</param>
         /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property Payload set to the value of <paramref name="obj"/>.</returns>
-        public RequestBuilder Payload(object obj)
+        internal RequestBuilder Payload(object obj)
         {
             StringContent payload = new StringContent(
                 JsonConvert.SerializeObject(obj),
@@ -59,7 +59,7 @@ namespace CreditsafeConnect.Service
         /// </summary>
         /// <param name="parameters">Request parameters of the request.</param>
         /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property RequestParameters set to the value of <paramref name="parameters"/>.</returns>
-        public RequestBuilder RequestParameters(Dictionary<string, string> parameters)
+        internal RequestBuilder RequestParameters(Dictionary<string, string> parameters)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -87,7 +87,7 @@ namespace CreditsafeConnect.Service
         /// </summary>
         /// <param name="pathParameters">Path parameters of the request.</param>
         /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property PathParameters set to the value of <paramref name="pathParameters"/>.</returns>
-        public RequestBuilder PathParameters(string pathParameters)
+        internal RequestBuilder PathParameters(string pathParameters)
         {
             pathParameters = pathParameters.Trim();
 
@@ -105,10 +105,10 @@ namespace CreditsafeConnect.Service
         /// Sets the authentication token of the request object.
         /// </summary>
         /// <param name="authenticationToken">Authentication token as a string.</param>
-        /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property AuthenticationToken set to the value of <paramref name="authenticationToken"/>.</returns>
-        public RequestBuilder AuthenticationToken(string authenticationToken)
+        /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property AuthenticationHeader set to the value of <paramref name="authenticationToken"/>.</returns>
+        internal RequestBuilder AuthenticationHeader(string authenticationToken)
         {
-            this.request.AuthenticationToken = AuthenticationHeaderValue.Parse(authenticationToken);
+            this.request.AuthenticationHeader = AuthenticationHeaderValue.Parse(authenticationToken);
 
             return this;
         }

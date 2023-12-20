@@ -6,7 +6,7 @@ namespace CreditsafeConnect.Service.Interfaces
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.CompanyModels;
 
     /// <summary>
     /// Service class for handling companies requests.

@@ -7,6 +7,7 @@ namespace CreditsafeConnect.Service
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.CompanyModels;
     using CreditsafeConnect.Repository;
     using CreditsafeConnect.Repository.Interfaces;
     using CreditsafeConnect.Service.Interfaces;
@@ -31,7 +32,7 @@ namespace CreditsafeConnect.Service
             Request getCompaniesRequest = requestBuilder
                 .Endpoint(endpoint)
                 .RequestParameters(parameters)
-                .AuthenticationToken(authenticationToken)
+                .AuthenticationHeader(authenticationToken)
                 .Build();
 
             return await this.companiesRepository.GetCompanies(getCompaniesRequest);

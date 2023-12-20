@@ -8,14 +8,15 @@ namespace CreditsafeConnect.Repository
     using System.Net.Http;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.CompanyModels;
     using CreditsafeConnect.Repository.Interfaces;
-    using CreditsafeConnect.Service;
-    using CreditsafeConnect.Service.Interfaces;
+    using CreditsafeConnect.Service.HttpClients;
+    using CreditsafeConnect.Service.HttpClients.Interfaces;
 
     /// <inheritdoc cref="ICompanyRepository"/>
     internal class CompanyRepository : ICompanyRepository
     {
-        private readonly ICreditsafeHttpClient creditsafeHttpClient;
+        private readonly ICompanyHttpClient companyHttpClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompanyRepository"/> class.
@@ -24,17 +25,17 @@ namespace CreditsafeConnect.Repository
         {
             HttpClient httpClient = new HttpClient();
 
-            this.creditsafeHttpClient = new CreditsafeHttpClient(httpClient);
+            this.companyHttpClient = new CompanyHttpClient(httpClient);
         }
 
         /// <summary>
-        /// Calls the <see cref="CreditsafeHttpClient.GetCompanies"/> method in the <see cref="CreditsafeHttpClient"/>.
+        /// Calls the <see cref="CompanyHttpClient.GetCompanies"/> method in the <see cref="CompanyHttpClient"/>.
         /// </summary>
         /// <param name="getCompaniesRequest">Request object with company search criteria in the request parameter.</param>
         /// <returns>List of <see cref="Company"/>.</returns>
         public async Task<IEnumerable<Company>> GetCompanies(Request getCompaniesRequest)
         {
-            return await this.creditsafeHttpClient.GetCompanies(getCompaniesRequest);
+            return await this.companyHttpClient.GetCompanies(getCompaniesRequest);
         }
     }
 }

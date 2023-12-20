@@ -13,7 +13,7 @@ namespace CreditsafeConnect.Repository.Interfaces
     internal interface IAuthenticationRepository
     {
         /// <summary>
-        /// Calls the <see cref="Service.CreditsafeHttpClient.Authenticate"/> method in the <see cref="Service.CreditsafeHttpClient"/>.
+        /// Calls the <see cref="Service.HttpClients.AuthenticationHttpClient.Authenticate"/> method in the <see cref="Service.HttpClients.AuthenticationHttpClient"/>.
         /// </summary>
         /// <param name="authenticationRequest">Request object with authentication endpoint and login credentials.</param>
         /// <returns>An asynchronous operation.</returns>
