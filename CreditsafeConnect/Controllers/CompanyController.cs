@@ -7,7 +7,7 @@ namespace CreditsafeConnect.Controllers
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.CompanyModels;
     using CreditsafeConnect.Service;
     using CreditsafeConnect.Service.Interfaces;
 
@@ -17,7 +17,7 @@ namespace CreditsafeConnect.Controllers
     /// </summary>
     public class CompanyController
     {
-        private readonly ICompanyService companiesService = new CompanyService();
+        private readonly ICompanyService companyService = new CompanyService();
 
         /// <summary>
         /// Gets a list of companies based on the given criteria.
@@ -45,7 +45,7 @@ namespace CreditsafeConnect.Controllers
 
             if (pageSize < 0 || pageSize > 100) throw new ArgumentException("Page size must be at least one and smaller than or equal to 100.");
 
-            return await this.companiesService.GetCompanies(authenticationToken, endpoint, countries, name, status, pageSize);
+            return await this.companyService.GetCompanies(authenticationToken, endpoint, countries, name, status, pageSize);
         }
     }
 }
