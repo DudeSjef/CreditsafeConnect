@@ -13,6 +13,7 @@ namespace CreditsafeConnect.Service.HttpClients
     using CreditsafeConnect.Properties;
     using CreditsafeConnect.Service.HttpClients.Interfaces;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <inheritdoc cref="ICreditReportHttpClient"/>
     internal class CreditReportHttpClient : ICreditReportHttpClient
@@ -34,7 +35,7 @@ namespace CreditsafeConnect.Service.HttpClients
         /// Retrieves credit report with extended company information based on the path parameter in the <paramref name="getCreditReportRequest"/>.
         /// </summary>
         /// <param name="getCreditReportRequest">Request object with credit report endpoint and companyId in the path parameter.</param>
-        /// <returns><see cref="CreditReport"/>.</returns>
+        /// <returns><see cref="Report"/>.</returns>
         /// <exception cref="HttpRequestException">
         /// Thrown when the http response status code is not successful.
         /// </exception>
@@ -50,11 +51,15 @@ namespace CreditsafeConnect.Service.HttpClients
 
             response.EnsureSuccessStatusCode();
 
-            CreditReport creditReport = JsonConvert.DeserializeObject<CreditReport>(response.Content.ReadAsStringAsync().Result);
+            JObject jsonObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+
+            JToken creditReport = jsonObject.SelectToken("report");
+
+            Report report = creditReport?.ToObject<Report>();
 
             CreditReportBuilder creditReportBuilder = new CreditReportBuilder();
 
-            return creditReportBuilder.BuildCreditReport(creditReport);
+            return creditReportBuilder.BuildCreditReport(report);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace CreditsafeConnect.Service.HttpClients
     using CreditsafeConnect.Models.CompanyModels;
     using CreditsafeConnect.Properties;
     using CreditsafeConnect.Service.HttpClients.Interfaces;
-    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <inheritdoc cref="ICompanyHttpClient"/>
     internal class CompanyHttpClient : ICompanyHttpClient
@@ -50,9 +50,11 @@ namespace CreditsafeConnect.Service.HttpClients
 
             response.EnsureSuccessStatusCode();
 
-            CompanyList companyList = JsonConvert.DeserializeObject<CompanyList>(response.Content.ReadAsStringAsync().Result);
+            JObject jsonObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
 
-            return companyList.Companies;
+            JToken companies = jsonObject.SelectToken("companies");
+
+            return companies?.ToObject<List<Company>>();
         }
     }
 }
