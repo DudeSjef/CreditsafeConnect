@@ -10,7 +10,7 @@
 
     internal interface IPortfolioRepository
     {
-        Task<List<Portfolio>> GetAllPortfolios(Request getAllPortfoliosRequest);
+        Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest);
         Task CreatePortfolio(Request createPortfolioRequest);
         Task AddCompanyToPortfolio(Request addCompanyToPortfolioRequest);
         Task RemoveCompanyFromPortfolio(Request removeCompanyFromPortfolioRequest);

@@ -10,8 +10,8 @@
 
     internal interface IPortfolioService
     {
-        Task<List<Portfolio>> GetAllPortfolios(string authenticationToken, string endpoint);
-        Task CreatePortfolio(string authenticationToken, string endpoint, string portfolioName);
+        Task<List<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name);
+        Task CreatePortfolio(string authenticationToken, string endpoint, string name);
         Task AddCompanyToPortfolio(string authenticationToken, string endpoint, string portfolioId, string companyId);
         Task RemoveCompanyFromPortfolio(string authenticationToken, string endpoint, string portfolioId, string companyId);
     }

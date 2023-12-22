@@ -1,17 +1,18 @@
-﻿namespace CreditsafeConnect.Service.HttpClients
+﻿// <copyright file="PortfolioEventHttpClient.cs" company="Multitube Engineering B.V.">
+// Copyright (c) Multitube Engineering B.V. All rights reserved.
+// </copyright>
+
+namespace CreditsafeConnect.Service.HttpClients
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
-    using CreditsafeConnect.Models.PortfolioModels;
-    using Interfaces;
-    using Models;
-    using Models.PortfolioEventModels;
+    using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.PortfolioEventModels;
+    using CreditsafeConnect.Properties;
+    using CreditsafeConnect.Service.HttpClients.Interfaces;
     using Newtonsoft.Json;
-    using Properties;
 
     internal class PortfolioEventHttpClient : IPortfolioEventHttpClient
     {

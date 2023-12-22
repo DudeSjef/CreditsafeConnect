@@ -23,9 +23,9 @@
             this.portfolioHttpClient = new PortfolioHttpClient(httpClient);
         }
 
-        public async Task<List<Portfolio>> GetAllPortfolios(Request getAllPortfoliosRequest)
+        public async Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
         {
-            return await this.portfolioHttpClient.GetAllPortfolios(getAllPortfoliosRequest);
+            return await this.portfolioHttpClient.GetPortfoliosByName(getPortfoliosByNameRequest);
         }
 
         public async Task CreatePortfolio(Request createPortfolioRequest)

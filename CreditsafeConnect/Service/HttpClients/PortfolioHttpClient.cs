@@ -2,15 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
-    using Interfaces;
-    using Models;
-    using Models.PortfolioModels;
-    using Newtonsoft.Json;
-    using Properties;
+    using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.PortfolioModels;
+    using CreditsafeConnect.Properties;
+    using CreditsafeConnect.Service.HttpClients.Interfaces;
+    using Newtonsoft.Json.Linq;
 
     internal class PortfolioHttpClient : IPortfolioHttpClient
     {
@@ -23,18 +21,22 @@
             this.httpClient = httpClient;
         }
 
-        public async Task<List<Portfolio>> GetAllPortfolios(Request getAllPortfoliosRequest)
+        public async Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
         {
-            this.httpClient.DefaultRequestHeaders.Authorization = getAllPortfoliosRequest.AuthenticationHeader;
+            this.httpClient.DefaultRequestHeaders.Authorization = getPortfoliosByNameRequest.AuthenticationHeader;
 
             HttpResponseMessage response =
-                await this.httpClient.GetAsync(getAllPortfoliosRequest.EndpointUri);
+                await this.httpClient.GetAsync(getPortfoliosByNameRequest.EndpointUri + getPortfoliosByNameRequest.RequestParameters);
 
             response.EnsureSuccessStatusCode();
 
-            PortfolioList portfolioList = JsonConvert.DeserializeObject<PortfolioList>(response.Content.ReadAsStringAsync().Result);
+            JObject jsonObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
 
-            return portfolioList.Portfolios;
+            JToken data = jsonObject.SelectToken("data");
+
+            JToken portfolios = data?.SelectToken("portfolios");
+
+            return portfolios?.ToObject<List<Portfolio>>();
         }
 
         public async Task CreatePortfolio(Request createPortfolioRequest)

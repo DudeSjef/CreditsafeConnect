@@ -15,22 +15,28 @@
     {
         private readonly IPortfolioRepository portfolioRepository = new PortfolioRepository();
 
-        public async Task<List<Portfolio>> GetAllPortfolios(string authenticationToken, string endpoint)
+        public async Task<List<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name)
         {
+            Dictionary<string, string> parameters = new Dictionary<string, string>
+            {
+                { "searchQuery", name },
+            };
+
             RequestBuilder requestBuilder = new RequestBuilder();
-            Request getAllPortfoliosRequest = requestBuilder
+            Request getPortfoliosByNameRequest = requestBuilder
                 .Endpoint(endpoint)
+                .RequestParameters(parameters)
                 .AuthenticationHeader(authenticationToken)
                 .Build();
 
-            return await this.portfolioRepository.GetAllPortfolios(getAllPortfoliosRequest);
+            return await this.portfolioRepository.GetPortfoliosByName(getPortfoliosByNameRequest);
         }
 
-        public async Task CreatePortfolio(string authenticationToken, string endpoint, string portfolioName)
+        public async Task CreatePortfolio(string authenticationToken, string endpoint, string name)
         {
             object portfolio = new
             {
-                name = portfolioName,
+                name = name,
             };
 
             RequestBuilder requestBuilder = new RequestBuilder();
