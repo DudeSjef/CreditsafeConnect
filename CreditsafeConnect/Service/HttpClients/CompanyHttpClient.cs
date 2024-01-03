@@ -30,17 +30,7 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient = httpClient;
         }
 
-        /// <summary>
-        /// Retrieves company information based on the request parameter in the <paramref name="getCompaniesRequest"/>.
-        /// </summary>
-        /// <param name="getCompaniesRequest">Request object with company search criteria in the request parameter.</param>
-        /// <returns>List of <see cref="Company"/>.</returns>
-        /// <exception cref="HttpRequestException">
-        /// Thrown when the http response status code is not successful.
-        /// </exception>
-        /// <exception cref="UriFormatException">
-        /// Thrown when the base address URI format is invalid.
-        /// </exception>
+        /// <inheritdoc cref="ICompanyHttpClient.GetCompanies"/>
         public async Task<List<Company>> GetCompanies(Request getCompaniesRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getCompaniesRequest.AuthenticationHeader;

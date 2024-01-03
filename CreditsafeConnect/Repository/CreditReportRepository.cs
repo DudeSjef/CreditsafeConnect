@@ -27,11 +27,7 @@ namespace CreditsafeConnect.Repository
             this.creditReportHttpClient = new CreditReportHttpClient(httpClient);
         }
 
-        /// <summary>
-        /// Calls the <see cref="CreditReportHttpClient.GetCreditReport"/> method in the <see cref="CreditReportHttpClient"/>.
-        /// </summary>
-        /// <param name="getCreditReportRequest">Request object with company ID in the path parameter.</param>
-        /// <returns>CreditReport object.</returns>
+        /// <inheritdoc cref="ICreditReportRepository.GetCreditReport"/>
         public async Task<CreditReportResult> GetCreditReport(Request getCreditReportRequest)
         {
             return await this.creditReportHttpClient.GetCreditReport(getCreditReportRequest);

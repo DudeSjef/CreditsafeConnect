@@ -106,10 +106,11 @@
     <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CreditReportController.cs" />
+    <Compile Include="Controllers\PortfolioController.cs" />
+    <Compile Include="Controllers\PortfolioEventController.cs" />
     <Compile Include="Models\CompanyModels\Address.cs" />
     <Compile Include="Models\AuthenticationToken.cs" />
     <Compile Include="Models\CompanyModels\Company.cs" />
-    <Compile Include="Models\CompanyModels\CompanyList.cs" />
     <Compile Include="Models\CreditReportModels\Financial.cs" />
     <Compile Include="Models\CreditReportModels\General.cs" />
     <Compile Include="Models\CreditReportModels\Internal\AdditionalInformation.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Models\CreditReportModels\Internal\CompanySummary.cs" />
     <Compile Include="Models\CreditReportModels\Internal\ContactInformation.cs" />
     <Compile Include="Models\CreditReportModels\Internal\CreditLimit.cs" />
-    <Compile Include="Models\CreditReportModels\Internal\CreditReport.cs" />
     <Compile Include="Models\CreditReportModels\Internal\CreditRating.cs" />
     <Compile Include="Models\CreditReportModels\CreditReportResult.cs" />
     <Compile Include="Models\CreditReportModels\Internal\EmployeesInformation.cs" />
@@ -134,10 +134,10 @@
     <Compile Include="Models\CreditReportModels\Internal\Report.cs" />
     <Compile Include="Models\EnumExtensions.cs" />
     <Compile Include="Models\CompanyModels\OfficeType.cs" />
+    <Compile Include="Models\PortfolioEventModels\EventRuleSetting.cs" />
     <Compile Include="Models\PortfolioEventModels\PortfolioEvent.cs" />
     <Compile Include="Models\PortfolioEventModels\EventCompany.cs" />
     <Compile Include="Models\PortfolioModels\Portfolio.cs" />
-    <Compile Include="Models\PortfolioModels\PortfolioList.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\CompanyModels\Status.cs" />

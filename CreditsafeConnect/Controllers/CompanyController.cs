@@ -24,7 +24,7 @@ namespace CreditsafeConnect.Controllers
         /// </summary>
         /// <param name="authenticationToken">Authentication token to be sent in the authentication header.</param>
         /// <param name="endpoint">URI of the companies endpoint.</param>
-        /// <param name="countries">Comma-separated list of two-letter countries codes (ISO 3166-1 alpha-2) for the countries to search in.</param>
+        /// <param name="countries">Comma-separated list of two-letter country codes (ISO 3166-1 alpha-2) for the countries to search in.</param>
         /// <param name="name">Name of the company to be searched for.</param>
         /// <param name="status">Status of the company to be searched for. The default value is <see cref="Status.Active"/>.</param>
         /// <param name="pageSize">Number of companies to retrieve. Value should be between 1 and 100. The default value is 20.</param>

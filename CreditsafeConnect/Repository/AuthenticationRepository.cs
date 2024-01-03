@@ -26,11 +26,7 @@ namespace CreditsafeConnect.Repository
             this.authenticationHttpClient = new AuthenticationHttpClient(httpClient);
         }
 
-        /// <summary>
-        /// Calls the <see cref="AuthenticationHttpClient.Authenticate"/> method in the <see cref="AuthenticationHttpClient"/>.
-        /// </summary>
-        /// <param name="authenticationRequest">Request object containing all the information necessary to send an authentication request.</param>
-        /// <returns>An asynchronous operation.</returns>
+        /// <inheritdoc cref="IAuthenticationRepository.Authenticate"/>
         public async Task<AuthenticationToken> Authenticate(Request authenticationRequest)
         {
             return await this.authenticationHttpClient.Authenticate(authenticationRequest);

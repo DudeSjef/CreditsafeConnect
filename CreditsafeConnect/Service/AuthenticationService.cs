@@ -16,11 +16,7 @@ namespace CreditsafeConnect.Service
     {
         private readonly IAuthenticationRepository authenticationRepository = new AuthenticationRepository();
 
-        /// <summary>
-        /// Calls the Authenticate method in the repository layer.
-        /// </summary>
-        /// <param name="endpoint">URI of the authenticate endpoint.</param>
-        /// <returns>An asynchronous operation.</returns>
+        /// <inheritdoc cref="IAuthenticationService.Authenticate"/>
         public async Task<AuthenticationToken> Authenticate(string endpoint)
         {
             object login = new

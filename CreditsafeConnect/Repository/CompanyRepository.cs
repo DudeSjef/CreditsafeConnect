@@ -28,11 +28,7 @@ namespace CreditsafeConnect.Repository
             this.companyHttpClient = new CompanyHttpClient(httpClient);
         }
 
-        /// <summary>
-        /// Calls the <see cref="CompanyHttpClient.GetCompanies"/> method in the <see cref="CompanyHttpClient"/>.
-        /// </summary>
-        /// <param name="getCompaniesRequest">Request object with company search criteria in the request parameter.</param>
-        /// <returns>List of <see cref="Company"/>.</returns>
+        /// <inheritdoc cref="ICompanyRepository.GetCompanies"/>
         public async Task<IEnumerable<Company>> GetCompanies(Request getCompaniesRequest)
         {
             return await this.companyHttpClient.GetCompanies(getCompaniesRequest);

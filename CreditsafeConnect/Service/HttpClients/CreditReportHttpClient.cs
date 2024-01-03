@@ -12,7 +12,7 @@ namespace CreditsafeConnect.Service.HttpClients
     using CreditsafeConnect.Models.CreditReportModels.Internal;
     using CreditsafeConnect.Properties;
     using CreditsafeConnect.Service.HttpClients.Interfaces;
-    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <inheritdoc cref="ICreditReportHttpClient"/>
     internal class CreditReportHttpClient : ICreditReportHttpClient
@@ -30,17 +30,7 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient = httpClient;
         }
 
-        /// <summary>
-        /// Retrieves credit report with extended company information based on the path parameter in the <paramref name="getCreditReportRequest"/>.
-        /// </summary>
-        /// <param name="getCreditReportRequest">Request object with credit report endpoint and companyId in the path parameter.</param>
-        /// <returns><see cref="CreditReport"/>.</returns>
-        /// <exception cref="HttpRequestException">
-        /// Thrown when the http response status code is not successful.
-        /// </exception>
-        /// <exception cref="UriFormatException">
-        /// Thrown when the base address URI format is invalid.
-        /// </exception>
+        /// <inheritdoc cref="ICreditReportHttpClient.GetCreditReport"/>
         public async Task<CreditReportResult> GetCreditReport(Request getCreditReportRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getCreditReportRequest.AuthenticationHeader;
@@ -50,11 +40,15 @@ namespace CreditsafeConnect.Service.HttpClients
 
             response.EnsureSuccessStatusCode();
 
-            CreditReport creditReport = JsonConvert.DeserializeObject<CreditReport>(response.Content.ReadAsStringAsync().Result);
+            JObject jsonObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+
+            JToken creditReport = jsonObject.SelectToken("report");
+
+            Report report = creditReport?.ToObject<Report>();
 
             CreditReportBuilder creditReportBuilder = new CreditReportBuilder();
 
-            return creditReportBuilder.BuildCreditReport(creditReport);
+            return creditReportBuilder.BuildCreditReport(report);
         }
     }
 }

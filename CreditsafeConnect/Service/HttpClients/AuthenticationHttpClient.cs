@@ -28,17 +28,7 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient = httpClient;
         }
 
-        /// <summary>
-        /// Sends an authentication request and returns the authentication token.
-        /// </summary>
-        /// <param name="authenticationRequest">Request object with authentication endpoint and login credentials.</param>
-        /// <returns><see cref="AuthenticationToken"/>.</returns>
-        /// <exception cref="HttpRequestException">
-        /// Thrown when the HTTP response status code is not successful.
-        /// </exception>
-        /// <exception cref="UriFormatException">
-        /// Thrown when the base address URI format is invalid.
-        /// </exception>
+        /// <inheritdoc cref="IAuthenticationHttpClient.Authenticate"/>
         public async Task<AuthenticationToken> Authenticate(Request authenticationRequest)
         {
             HttpResponseMessage response =
