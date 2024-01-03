@@ -9,11 +9,37 @@ namespace CreditsafeConnect.Service.HttpClients.Interfaces
     using CreditsafeConnect.Models;
     using CreditsafeConnect.Models.PortfolioModels;
 
+    /// <summary>
+    /// Class for handling portfolio HTTP requests.
+    /// </summary>
     internal interface IPortfolioHttpClient
     {
+        /// <summary>
+        /// Retrieves all portfolios by name.
+        /// </summary>
+        /// <param name="getPortfoliosByNameRequest">Request object with portfolios endpoint and portfolio name.</param>
+        /// <returns><see cref="List{Portfolio}"/>.</returns>
         Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest);
+
+        /// <summary>
+        /// Creates a portfolio.
+        /// </summary>
+        /// <param name="createPortfolioRequest">Request object with portfolios endpoint and portfolio name.</param>
+        /// <returns>An asynchronous operation.</returns>
         Task CreatePortfolio(Request createPortfolioRequest);
+
+        /// <summary>
+        /// Adds a company to a portfolio.
+        /// </summary>
+        /// <param name="addCompanyToPortfolioRequest">Request object with portfolios endpoint, portfolio ID, and company ID.</param>
+        /// <returns>An asynchronous operation.</returns>
         Task AddCompanyToPortfolio(Request addCompanyToPortfolioRequest);
+
+        /// <summary>
+        /// Removes a company from a portfolio.
+        /// </summary>
+        /// <param name="removeCompanyFromPortfolioRequest">Request object with portfolios endpoint, portfolio ID, and company ID.</param>
+        /// <returns>An asynchronous operation.</returns>
         Task RemoveCompanyFromPortfolio(Request removeCompanyFromPortfolioRequest);
     }
 }

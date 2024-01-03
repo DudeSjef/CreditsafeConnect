@@ -1,15 +1,16 @@
-﻿namespace CreditsafeConnect.Service
+﻿// <copyright file="PortfolioService.cs" company="Multitube Engineering B.V.">
+// Copyright (c) Multitube Engineering B.V. All rights reserved.
+// </copyright>
+
+namespace CreditsafeConnect.Service
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using Interfaces;
-    using Models;
-    using Models.PortfolioModels;
-    using Repository;
-    using Repository.Interfaces;
+    using CreditsafeConnect.Models;
+    using CreditsafeConnect.Models.PortfolioModels;
+    using CreditsafeConnect.Repository;
+    using CreditsafeConnect.Repository.Interfaces;
+    using CreditsafeConnect.Service.Interfaces;
 
     internal class PortfolioService : IPortfolioService
     {
@@ -36,7 +37,7 @@
         {
             object portfolio = new
             {
-                name = name,
+                name,
             };
 
             RequestBuilder requestBuilder = new RequestBuilder();

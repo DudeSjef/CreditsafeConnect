@@ -1,4 +1,8 @@
-﻿namespace CreditsafeConnect.Service.HttpClients
+﻿// <copyright file="PortfolioHttpClient.cs" company="Multitube Engineering B.V.">
+// Copyright (c) Multitube Engineering B.V. All rights reserved.
+// </copyright>
+
+namespace CreditsafeConnect.Service.HttpClients
 {
     using System;
     using System.Collections.Generic;
@@ -10,10 +14,15 @@
     using CreditsafeConnect.Service.HttpClients.Interfaces;
     using Newtonsoft.Json.Linq;
 
+    /// <inheritdoc cref="IPortfolioHttpClient"/>
     internal class PortfolioHttpClient : IPortfolioHttpClient
     {
         private readonly HttpClient httpClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PortfolioHttpClient"/> class.
+        /// </summary>
+        /// <param name="httpClient"><see cref="HttpClient"/> to be used for sending HTTP requests.</param>
         internal PortfolioHttpClient(HttpClient httpClient)
         {
             httpClient.BaseAddress = new Uri(Resources.Url);
@@ -21,6 +30,7 @@
             this.httpClient = httpClient;
         }
 
+        /// <inheritdoc cref="IPortfolioHttpClient.GetPortfoliosByName"/>
         public async Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getPortfoliosByNameRequest.AuthenticationHeader;
@@ -39,6 +49,7 @@
             return portfolios?.ToObject<List<Portfolio>>();
         }
 
+        /// <inheritdoc cref="IPortfolioHttpClient.CreatePortfolio"/>
         public async Task CreatePortfolio(Request createPortfolioRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = createPortfolioRequest.AuthenticationHeader;
@@ -49,6 +60,7 @@
             response.EnsureSuccessStatusCode();
         }
 
+        /// <inheritdoc cref="IPortfolioHttpClient.AddCompanyToPortfolio"/>
         public async Task AddCompanyToPortfolio(Request addCompanyToPortfolioRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = addCompanyToPortfolioRequest.AuthenticationHeader;
@@ -59,6 +71,7 @@
             response.EnsureSuccessStatusCode();
         }
 
+        /// <inheritdoc cref="IPortfolioHttpClient.RemoveCompanyFromPortfolio"/>
         public async Task RemoveCompanyFromPortfolio(Request removeCompanyFromPortfolioRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = removeCompanyFromPortfolioRequest.AuthenticationHeader;
