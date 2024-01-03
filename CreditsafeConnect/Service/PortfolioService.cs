@@ -12,10 +12,12 @@ namespace CreditsafeConnect.Service
     using CreditsafeConnect.Repository.Interfaces;
     using CreditsafeConnect.Service.Interfaces;
 
+    /// <inheritdoc cref="IPortfolioService"/>
     internal class PortfolioService : IPortfolioService
     {
         private readonly IPortfolioRepository portfolioRepository = new PortfolioRepository();
 
+        /// <inheritdoc cref="IPortfolioService.GetPortfoliosByName"/>
         public async Task<List<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>
@@ -33,6 +35,7 @@ namespace CreditsafeConnect.Service
             return await this.portfolioRepository.GetPortfoliosByName(getPortfoliosByNameRequest);
         }
 
+        /// <inheritdoc cref="IPortfolioService.CreatePortfolio"/>
         public async Task CreatePortfolio(string authenticationToken, string endpoint, string name)
         {
             object portfolio = new
@@ -50,6 +53,7 @@ namespace CreditsafeConnect.Service
             await this.portfolioRepository.CreatePortfolio(createPortfolioRequest);
         }
 
+        /// <inheritdoc cref="IPortfolioService.AddCompanyToPortfolio"/>
         public async Task AddCompanyToPortfolio(string authenticationToken, string endpoint, string portfolioId, string companyId)
         {
             object company = new
@@ -71,6 +75,7 @@ namespace CreditsafeConnect.Service
             await this.portfolioRepository.AddCompanyToPortfolio(addCompanyToPortfolioRequest);
         }
 
+        /// <inheritdoc cref="IPortfolioService.RemoveCompanyFromPortfolio"/>
         public async Task RemoveCompanyFromPortfolio(string authenticationToken, string endpoint, string portfolioId, string companyId)
         {
             RequestBuilder requestBuilder = new RequestBuilder();
