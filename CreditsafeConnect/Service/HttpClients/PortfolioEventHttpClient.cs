@@ -14,10 +14,15 @@ namespace CreditsafeConnect.Service.HttpClients
     using CreditsafeConnect.Service.HttpClients.Interfaces;
     using Newtonsoft.Json;
 
+    /// <inheritdoc cref="IPortfolioEventHttpClient"/>
     internal class PortfolioEventHttpClient : IPortfolioEventHttpClient
     {
         private readonly HttpClient httpClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PortfolioEventHttpClient"/> class.
+        /// </summary>
+        /// <param name="httpClient"><see cref="HttpClient"/> to be used for sending HTTP requests.</param>
         internal PortfolioEventHttpClient(HttpClient httpClient)
         {
             httpClient.BaseAddress = new Uri(Resources.Url);
@@ -25,6 +30,7 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient = httpClient;
         }
 
+        /// <inheritdoc cref="IPortfolioEventHttpClient.GetAllPortfolioEvents"/>
         public async Task<List<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getAllPortfolioEventsRequest.AuthenticationHeader;
@@ -35,6 +41,19 @@ namespace CreditsafeConnect.Service.HttpClients
             response.EnsureSuccessStatusCode();
 
             return JsonConvert.DeserializeObject<List<PortfolioEvent>>(response.Content.ReadAsStringAsync().Result);
+        }
+
+        /// <inheritdoc cref="IPortfolioEventHttpClient.UpdateEventRules"/>
+        public async Task UpdateEventRules(Request updateEventRulesRequest)
+        {
+            this.httpClient.DefaultRequestHeaders.Authorization = updateEventRulesRequest.AuthenticationHeader;
+
+            HttpResponseMessage response =
+                await this.httpClient.PutAsync(
+                    updateEventRulesRequest.EndpointUri + updateEventRulesRequest.PathParameters,
+                    updateEventRulesRequest.Payload);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }
