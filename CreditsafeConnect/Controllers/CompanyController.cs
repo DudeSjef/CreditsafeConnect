@@ -34,7 +34,7 @@ namespace CreditsafeConnect.Controllers
         /// </exception>
         public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status = "Active", int pageSize = 20)
         {
-            if (string.IsNullOrEmpty(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
+            if (string.IsNullOrWhiteSpace(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
             if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");
             if (string.IsNullOrWhiteSpace(countries)) throw new ArgumentException("At least one country must be selected.");
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name cannot be empty.");
