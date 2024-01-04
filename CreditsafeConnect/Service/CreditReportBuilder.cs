@@ -42,22 +42,17 @@ namespace CreditsafeConnect.Service
         {
             General general = new General
             {
-                Language = report.Language,
+                //Language = report.Language,
                 VisitingAddress = report.ContactInformation.MainAddress,
                 PostalAddress = report.ContactInformation.OtherAddresses
-                    .FirstOrDefault(address => Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)),
+                    .First(address => Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)),
                 PhoneNumber = report.ContactInformation.MainAddress.Telephone,
             };
 
-            if (report.ContactInformation.Websites.Any(website =>
-                    Regex.IsMatch(website, @"\.nl", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)))
+            if (report.ContactInformation.Websites?.Length > 0)
             {
                 general.Website = report.ContactInformation.Websites.FirstOrDefault(website =>
-                    Regex.IsMatch(website, @"\.nl", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase));
-            }
-            else
-            {
-                general.Website = report.ContactInformation.Websites.FirstOrDefault();
+                    Regex.IsMatch(website, @"\.nl", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.Websites.FirstOrDefault();
             }
 
             return general;
@@ -83,9 +78,9 @@ namespace CreditsafeConnect.Service
             string rsin = report.AdditionalInformation.Misc.RsinNumber;
             financial.EoriNumber = report.CompanySummary.Country + new string('0', 9 - rsin.Length > 0 ? 9 - rsin.Length : 0) + rsin;
 
-            financial.UltimateParent = report.GroupStructure.UltimateParent;
-            financial.ImmediateParent = report.GroupStructure.ImmediateParent;
-            financial.Employees = int.Parse(report.OtherInformation.EmployeesInformation
+            financial.UltimateParent = report.GroupStructure?.UltimateParent;
+            financial.ImmediateParent = report.GroupStructure?.ImmediateParent;
+            financial.Employees = int.Parse(report.OtherInformation.EmployeesInformation?
                 .OrderByDescending(employeeInformation => employeeInformation.Year).FirstOrDefault()
                 ?.NumberOfEmployees ?? string.Empty);
             financial.LegalForm = report.CompanyIdentification.BasicInformation.LegalForm;

@@ -4,6 +4,7 @@
 
 namespace CreditsafeConnect.Service
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
     using CreditsafeConnect.Models.CreditReportModels;
@@ -19,12 +20,18 @@ namespace CreditsafeConnect.Service
         private readonly ICreditReportRepository creditReportRepository = new CreditReportRepository();
 
         /// <inheritdoc cref="ICreditReportService.GetCreditReport"/>
-        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId)
+        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId, string language)
         {
+            Dictionary<string, string> requestParameters = new Dictionary<string, string>()
+            {
+                { "language", language }
+            };
+
             RequestBuilder requestBuilder = new RequestBuilder();
             Request getCreditReportRequest = requestBuilder
                 .Endpoint(endpoint)
                 .PathParameters(companyId)
+                .RequestParameters(requestParameters)
                 .AuthenticationHeader(authenticationToken)
                 .Build();
 
