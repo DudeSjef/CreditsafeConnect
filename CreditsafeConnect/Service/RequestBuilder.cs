@@ -61,6 +61,8 @@ namespace CreditsafeConnect.Service
         /// <returns>An instance of the <see cref="RequestBuilder"/> class with the <see cref="request"/> object which has the property RequestParameters set to the value of <paramref name="parameters"/>.</returns>
         internal RequestBuilder RequestParameters(Dictionary<string, string> parameters)
         {
+            if (parameters == null) return this;
+
             StringBuilder stringBuilder = new StringBuilder();
 
             foreach (KeyValuePair<string, string> parameter in parameters)

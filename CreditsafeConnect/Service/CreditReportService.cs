@@ -5,6 +5,7 @@
 namespace CreditsafeConnect.Service
 {
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
     using CreditsafeConnect.Models.CreditReportModels;
@@ -20,12 +21,17 @@ namespace CreditsafeConnect.Service
         private readonly ICreditReportRepository creditReportRepository = new CreditReportRepository();
 
         /// <inheritdoc cref="ICreditReportService.GetCreditReport"/>
-        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId, string language)
+        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId, string country)
         {
-            Dictionary<string, string> requestParameters = new Dictionary<string, string>()
+            Dictionary<string, string> requestParameters = null;
+
+            if (Regex.IsMatch(country, @"^de$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase))
             {
-                { "language", language }
-            };
+                requestParameters = new Dictionary<string, string>()
+                {
+                    { "customData", "de_reason_code::1" },
+                };
+            }
 
             RequestBuilder requestBuilder = new RequestBuilder();
             Request getCreditReportRequest = requestBuilder

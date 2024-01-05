@@ -125,7 +125,7 @@
     <Compile Include="Models\CreditReportModels\Internal\EmployeesInformation.cs" />
     <Compile Include="Models\CreditReportModels\Internal\GroupStructure.cs" />
     <Compile Include="Models\CreditReportModels\LegalForm.cs" />
-    <Compile Include="Models\CreditReportModels\Internal\MainActivity.cs" />
+    <Compile Include="Models\CreditReportModels\MainActivity.cs" />
     <Compile Include="Models\CreditReportModels\Internal\CreditReportAddress.cs" />
     <Compile Include="Models\CreditReportModels\Internal\Misc.cs" />
     <Compile Include="Models\CreditReportModels\Internal\OtherInformation.cs" />

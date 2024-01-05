@@ -36,7 +36,7 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient.DefaultRequestHeaders.Authorization = getCreditReportRequest.AuthenticationHeader;
 
             HttpResponseMessage response =
-                await this.httpClient.GetAsync(getCreditReportRequest.EndpointUri + getCreditReportRequest.PathParameters);
+                await this.httpClient.GetAsync(getCreditReportRequest.EndpointUri + getCreditReportRequest.PathParameters + getCreditReportRequest.RequestParameters);
 
             response.EnsureSuccessStatusCode();
 

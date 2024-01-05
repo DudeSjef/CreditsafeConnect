@@ -9,7 +9,6 @@
     public class Report
     {
         public string CompanyId { get; set; }
-        public string Language { get; set; }
         public CompanySummary CompanySummary { get; set; }
         public CompanyIdentification CompanyIdentification { get; set; }
         public ContactInformation ContactInformation { get; set; }

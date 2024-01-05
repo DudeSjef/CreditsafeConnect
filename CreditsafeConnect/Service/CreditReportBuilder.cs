@@ -4,8 +4,11 @@
 
 namespace CreditsafeConnect.Service
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
+    using System.Xml.Linq;
     using CreditsafeConnect.Models.CreditReportModels;
     using CreditsafeConnect.Models.CreditReportModels.Internal;
 
@@ -23,7 +26,7 @@ namespace CreditsafeConnect.Service
         {
             CreditReportResult result = new CreditReportResult
             {
-                CreditsafefId = report.CompanyId,
+                CreditsafeId = report.CompanyId,
                 Name = report.CompanySummary.BusinessName,
                 Status = report.CompanySummary.CompanyStatus.Status,
                 General = BuildGeneral(report),
@@ -42,17 +45,23 @@ namespace CreditsafeConnect.Service
         {
             General general = new General
             {
-                //Language = report.Language,
+                Language = report.CompanySummary.Country,
                 VisitingAddress = report.ContactInformation.MainAddress,
-                PostalAddress = report.ContactInformation.OtherAddresses
+                PostalAddress = report.ContactInformation.OtherAddresses?
                     .First(address => Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)),
                 PhoneNumber = report.ContactInformation.MainAddress.Telephone,
             };
 
+            if (report.ContactInformation.EmailAddresses?.Length > 0)
+            {
+                general.Email = report.ContactInformation.EmailAddresses.FirstOrDefault(email =>
+                    Regex.IsMatch(email, $"\\.{general.Language}", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.Websites.FirstOrDefault();
+            }
+
             if (report.ContactInformation.Websites?.Length > 0)
             {
                 general.Website = report.ContactInformation.Websites.FirstOrDefault(website =>
-                    Regex.IsMatch(website, @"\.nl", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.Websites.FirstOrDefault();
+                    Regex.IsMatch(website, $"\\.{general.Language}", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.Websites.FirstOrDefault();
             }
 
             return general;
@@ -69,21 +78,77 @@ namespace CreditsafeConnect.Service
             {
                 RegistrationNumber = report.CompanySummary.CompanyRegistrationNumber,
                 RegistrationDate = report.CompanyIdentification.BasicInformation.CompanyRegistrationDate,
-                CreditLimit = decimal.Parse(report.CompanySummary.CreditRating.CreditLimit.Value),
+                MainActivity = report.CompanySummary.MainActivity,
                 CreditScore = report.CompanySummary.CreditRating.CommonValue,
-                Currency = report.CompanySummary.CreditRating.CreditLimit.Currency,
+                Currency = report.CompanySummary.CreditRating.CreditLimit.Currency ?? "EUR",
             };
 
-            // EORI Number = Country code + RSIN (if length < 9, keep APPENDING 0)
-            string rsin = report.AdditionalInformation.Misc.RsinNumber;
-            financial.EoriNumber = report.CompanySummary.Country + new string('0', 9 - rsin.Length > 0 ? 9 - rsin.Length : 0) + rsin;
+            if (decimal.TryParse(report.CompanySummary.CreditRating.CreditLimit.Value, out decimal creditLimit))
+            {
+                financial.CreditLimit = creditLimit;
+            }
+
+            if (!string.IsNullOrWhiteSpace(report.AdditionalInformation.Misc.RsinNumber))
+            {
+                // EORI Number = Country code + RSIN (if length < 9, keep APPENDING 0)
+                string rsin = report.AdditionalInformation.Misc.RsinNumber;
+                financial.EoriNumber = report.CompanySummary.Country + new string('0', 9 - rsin.Length > 0 ? 9 - rsin.Length : 0) + rsin;
+            }
 
             financial.UltimateParent = report.GroupStructure?.UltimateParent;
             financial.ImmediateParent = report.GroupStructure?.ImmediateParent;
+
+            string numberOfEmployees = report.OtherInformation.EmployeesInformation?.OrderByDescending(
+                employeeInformation => employeeInformation.Year).FirstOrDefault()?.NumberOfEmployees;
+
+            if (!string.IsNullOrWhiteSpace(numberOfEmployees))
+            {
+                if (int.TryParse(numberOfEmployees, out int employeeCount))
+                {
+                    financial.Employees = employeeCount;
+                }
+                else if (numberOfEmployees.Contains("-"))
+                {
+                    List<double> numbers = (from Match match in Regex.Matches(numberOfEmployees, @"\d+") select double.Parse(match.Value)).ToList();
+
+                    financial.Employees = Convert.ToInt32(Math.Round(numbers.Sum() / 2));
+                }
+            }
+
             financial.Employees = int.Parse(report.OtherInformation.EmployeesInformation?
                 .OrderByDescending(employeeInformation => employeeInformation.Year).FirstOrDefault()
                 ?.NumberOfEmployees ?? string.Empty);
-            financial.LegalForm = report.CompanyIdentification.BasicInformation.LegalForm;
+
+            switch (report.CompanySummary.BusinessName)
+            {
+                case string name when Regex.IsMatch(name, @"\b(BV|B\.?V\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "BV";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(NV|N\.?V\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "NV";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(BVBA|B\.?V\.?B\.?A\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "BVBA";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(VOF|V\.?O\.?F\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "VOF";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(GMBH|G\.?M\.?B\.?H\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "GMBH";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(LTD|L\.?T\.?D\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "LTD";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(INC|I\.?N\.?C\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "INC";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(PLC|P\.?L\.?C\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "PLC";
+                    break;
+                case string name when Regex.IsMatch(name, @"\b(SPRL|S\.?P\.?R\.?L\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
+                    financial.LegalForm = "SPRL";
+                    break;
+            }
 
             return financial;
         }

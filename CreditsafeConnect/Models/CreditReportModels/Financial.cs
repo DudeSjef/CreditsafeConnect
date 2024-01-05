@@ -11,6 +11,7 @@
     {
         public string RegistrationNumber { get; set; }
         public DateTime RegistrationDate { get; set; }
+        public MainActivity MainActivity { get; set; }
         public decimal CreditLimit { get; set; }
         public string CreditScore { get; set; }
         public string Currency { get; set; }
@@ -18,6 +19,6 @@
         public Parent UltimateParent { get; set; }
         public Parent ImmediateParent { get; set; }
         public int Employees { get; set; }
-        public LegalForm LegalForm { get; set; }
+        public string LegalForm { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 
     public class CreditReportResult
     {
-        public string CreditsafefId { get; set; }
+        public string CreditsafeId { get; set; }
         public string Name { get; set; }
         public Status Status { get; set; }
         public General General { get; set; }

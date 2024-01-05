@@ -24,18 +24,18 @@ namespace CreditsafeConnect.Controllers
         /// <param name="authenticationToken">Authentication token to be sent in the authentication header.</param>
         /// <param name="endpoint">URI of the credit report endpoint.</param>
         /// <param name="companyId">ID of the company as a string.</param>
-        /// <param name="language">Two-letter country code (ISO 3166-1 alpha-2) which determines the language of the returned credit report.</param>
+        /// <param name="country">Two-letter country code (ISO 3166-1 alpha-2) of the company to retrieve the credit report from.</param>
         /// <returns>CreditReport object.</returns>
         /// <exception cref="ArgumentException">
         /// Thrown when one of the parameters has an illegal value.
         /// </exception>
-        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId, string language = "nl")
+        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId, string country = "NL")
         {
             if (string.IsNullOrWhiteSpace(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
             if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");
             if (string.IsNullOrWhiteSpace(companyId)) throw new ArgumentException("Company ID cannot be empty.");
 
-            return await this.creditReportService.GetCreditReport(authenticationToken, endpoint, companyId, language);
+            return await this.creditReportService.GetCreditReport(authenticationToken, endpoint, companyId, country);
         }
     }
 }
