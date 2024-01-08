@@ -1,22 +1,59 @@
-﻿namespace CreditsafeConnect.Models.CreditReportModels.Internal
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿// <copyright file="CreditReportAddress.cs" company="Multitube Engineering B.V.">
+// Copyright (c) Multitube Engineering B.V. All rights reserved.
+// </copyright>
 
+namespace CreditsafeConnect.Models.CreditReportModels.Internal
+{
+    /// <summary>
+    /// A class containing information about a company's address.
+    /// </summary>
     public class CreditReportAddress
     {
+        /// <summary>
+        /// Gets or sets the type of address.
+        /// </summary>
         public string Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the street.
+        /// </summary>
         public string Street { get; set; }
+
+        /// <summary>
+        /// Gets or sets the house number.
+        /// </summary>
         public string HouseNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the city.
+        /// </summary>
         public string City { get; set; }
+
+        /// <summary>
+        /// Gets or sets the zip code.
+        /// </summary>
         public string PostalCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the province.
+        /// </summary>
         public string Province { get; set; }
+
+        /// <summary>
+        /// Gets or sets the phone number.
+        /// </summary>
         public string Telephone { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the country.
+        /// </summary>
         public string Country { get; set; }
 
+        /// <summary>
+        /// Overrides the default method for comparing two object of this class.
+        /// </summary>
+        /// <param name="other">The other object to compare against.</param>
+        /// <returns>A boolean determining whether the two objects are equal or not.</returns>
         public bool Equals(CreditReportAddress other)
         {
             return this.Street == other.Street &&
@@ -25,22 +62,6 @@
                    this.PostalCode == other.PostalCode &&
                    this.Province == other.Province &&
                    this.Country == other.Country;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hashCode = this.Type != null ? this.Type.GetHashCode() : 0;
-                hashCode = (hashCode * 397) ^ (this.Street != null ? this.Street.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (this.HouseNumber != null ? this.HouseNumber.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (this.City != null ? this.City.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (this.PostalCode != null ? this.PostalCode.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (this.Province != null ? this.Province.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (this.Telephone != null ? this.Telephone.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (this.Country != null ? this.Country.GetHashCode() : 0);
-                return hashCode;
-            }
         }
     }
 }

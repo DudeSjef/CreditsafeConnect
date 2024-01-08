@@ -20,7 +20,7 @@ namespace CreditsafeConnect.Models.PortfolioModels
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets whether the portfolio is the default portfolio.
+        /// Gets or sets a value indicating whether the portfolio is the default portfolio.
         /// </summary>
         public bool IsDefault { get; set; }
     }

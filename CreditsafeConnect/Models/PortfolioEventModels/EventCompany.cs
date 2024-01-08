@@ -1,11 +1,9 @@
-﻿namespace CreditsafeConnect.Models.PortfolioEventModels
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+﻿// <copyright file="EventCompany.cs" company="Multitube Engineering B.V.">
+// Copyright (c) Multitube Engineering B.V. All rights reserved.
+// </copyright>
 
+namespace CreditsafeConnect.Models.PortfolioEventModels
+{
     /// <summary>
     /// Company information in an <see cref="PortfolioEvent"/> object.
     /// </summary>
@@ -17,7 +15,7 @@
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the company name
+        /// Gets or sets the company name.
         /// </summary>
         public string Name { get; set; }
     }
