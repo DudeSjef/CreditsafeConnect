@@ -13,6 +13,7 @@ namespace CreditsafeConnect.Service.HttpClients
     using CreditsafeConnect.Properties;
     using CreditsafeConnect.Service.HttpClients.Interfaces;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     /// <inheritdoc cref="IPortfolioEventHttpClient"/>
     internal class PortfolioEventHttpClient : IPortfolioEventHttpClient
@@ -36,11 +37,15 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient.DefaultRequestHeaders.Authorization = getAllPortfolioEventsRequest.AuthenticationHeader;
 
             HttpResponseMessage response =
-                await this.httpClient.GetAsync(getAllPortfolioEventsRequest.EndpointUri + getAllPortfolioEventsRequest.PathParameters);
+                await this.httpClient.GetAsync(getAllPortfolioEventsRequest.EndpointUri + getAllPortfolioEventsRequest.PathParameters + getAllPortfolioEventsRequest.RequestParameters);
 
             response.EnsureSuccessStatusCode();
 
-            return JsonConvert.DeserializeObject<List<PortfolioEvent>>(response.Content.ReadAsStringAsync().Result);
+            JObject jsonObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+
+            JToken portfolioEvents = jsonObject.SelectToken("data");
+
+            return portfolioEvents?.ToObject<List<PortfolioEvent>>();
         }
 
         /// <inheritdoc cref="IPortfolioEventHttpClient.UpdateEventRules"/>

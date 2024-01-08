@@ -19,6 +19,15 @@ namespace CreditsafeConnect.Service
         private readonly Request request = new Request();
 
         /// <summary>
+        /// Returns the <see cref="request"/> object.
+        /// </summary>
+        /// <returns>The <see cref="request"/> object.</returns>
+        public Request Build()
+        {
+            return this.request;
+        }
+
+        /// <summary>
         /// Sets the URI endpoint of the request object.
         /// </summary>
         /// <param name="endpoint">URI of the endpoint.</param>
@@ -113,15 +122,6 @@ namespace CreditsafeConnect.Service
             this.request.AuthenticationHeader = AuthenticationHeaderValue.Parse(authenticationToken);
 
             return this;
-        }
-
-        /// <summary>
-        /// Returns the <see cref="request"/> object.
-        /// </summary>
-        /// <returns>The <see cref="request"/> object.</returns>
-        public Request Build()
-        {
-            return this.request;
         }
     }
 }

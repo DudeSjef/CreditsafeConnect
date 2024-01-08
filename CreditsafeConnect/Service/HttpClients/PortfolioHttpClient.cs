@@ -6,6 +6,7 @@ namespace CreditsafeConnect.Service.HttpClients
 {
     using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
@@ -57,6 +58,8 @@ namespace CreditsafeConnect.Service.HttpClients
             HttpResponseMessage response =
                 await this.httpClient.PostAsync(createPortfolioRequest.EndpointUri, createPortfolioRequest.Payload);
 
+            // HTTP response code 409 means portfolio already exists with the given name
+            if (response.StatusCode == HttpStatusCode.Conflict) return;
             response.EnsureSuccessStatusCode();
         }
 
@@ -66,8 +69,10 @@ namespace CreditsafeConnect.Service.HttpClients
             this.httpClient.DefaultRequestHeaders.Authorization = addCompanyToPortfolioRequest.AuthenticationHeader;
 
             HttpResponseMessage response =
-                await this.httpClient.PostAsync(addCompanyToPortfolioRequest.EndpointUri, addCompanyToPortfolioRequest.Payload);
+                await this.httpClient.PostAsync(addCompanyToPortfolioRequest.EndpointUri + addCompanyToPortfolioRequest.PathParameters, addCompanyToPortfolioRequest.Payload);
 
+            // HTTP response code 409 means company has already been added to portfolio
+            if (response.StatusCode == HttpStatusCode.Conflict) return;
             response.EnsureSuccessStatusCode();
         }
 
@@ -80,6 +85,8 @@ namespace CreditsafeConnect.Service.HttpClients
                 await this.httpClient.DeleteAsync(removeCompanyFromPortfolioRequest.EndpointUri +
                     removeCompanyFromPortfolioRequest.PathParameters);
 
+            // HTTP response code 404 means company is not in portfolio
+            if (response.StatusCode == HttpStatusCode.NotFound) return;
             response.EnsureSuccessStatusCode();
         }
     }
