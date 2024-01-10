@@ -8,6 +8,8 @@ namespace CreditsafeConnect.Models.PortfolioEventModels
 
     public class PortfolioEvent
     {
+        public EventCompany Company { get; set; }
+
         public DateTime EventDate { get; set; }
 
         public string NewValue { get; set; }
