@@ -46,16 +46,27 @@ namespace CreditsafeConnect.Service
             General general = new General
             {
                 Language = report.CompanySummary.Country,
-                VisitingAddress = report.ContactInformation.MainAddress,
                 PostalAddress = report.ContactInformation.OtherAddresses?
                     .First(address => Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)),
                 PhoneNumber = report.ContactInformation.MainAddress.Telephone,
             };
 
+            if (!string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.Street) ||
+                string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.City) ||
+                string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.PostalCode) ||
+                string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.Country))
+            {
+                general.VisitingAddress = report.ContactInformation.MainAddress;
+            }
+            else
+            {
+                general.VisitingAddress = null;
+            }
+
             if (report.ContactInformation.EmailAddresses?.Length > 0)
             {
                 general.Email = report.ContactInformation.EmailAddresses.FirstOrDefault(email =>
-                    Regex.IsMatch(email, $"\\.{general.Language}", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.Websites.FirstOrDefault();
+                    Regex.IsMatch(email, $"\\.{general.Language}", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.EmailAddresses.FirstOrDefault();
             }
 
             if (report.ContactInformation.Websites?.Length > 0)
