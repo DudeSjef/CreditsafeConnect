@@ -47,6 +47,11 @@ namespace CreditsafeConnect.Models.CreditReportModels
         public string EoriNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the company's VAT number.
+        /// </summary>
+        public string VatNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets an object containing information about the company's highest parent.
         /// </summary>
         public Parent UltimateParent { get; set; }

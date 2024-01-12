@@ -18,6 +18,11 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         public DateTime CompanyRegistrationDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the company's VAT number.
+        /// </summary>
+        public string VatRegistrationNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the start date of company's operations.
         /// </summary>
         public DateTime OperationsStartDate { get; set; }

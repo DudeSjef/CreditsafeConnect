@@ -40,6 +40,11 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         public string Province { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the company should be included in the mailing list or not.
+        /// </summary>
+        public bool DirectMarketingOptOut { get; set; }
+
+        /// <summary>
         /// Gets or sets the phone number.
         /// </summary>
         public string Telephone { get; set; }
