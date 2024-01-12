@@ -6,6 +6,7 @@ namespace CreditsafeConnect.Service.Interfaces
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using CreditsafeConnect.Models;
     using CreditsafeConnect.Models.PortfolioEventModels;
 
     /// <summary>
@@ -22,8 +23,19 @@ namespace CreditsafeConnect.Service.Interfaces
         /// <param name="sortBy">Field to sort the results by. Default is eventDate.</param>
         /// <param name="sortDir">Direction to sort the results in. Default is descending.</param>
         /// <param name="startDate">Date to start retrieving events from.</param>
+        /// <param name="page">Page number.</param>
         /// <returns><see cref="List{PortfolioEvent}"/>.</returns>
-        Task<List<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string sortBy, string sortDir, string startDate);
+        Task<List<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string sortBy, string sortDir, string startDate, int page);
+
+        /// <summary>
+        /// Retrieves the number of portfolio events.
+        /// </summary>
+        /// <param name="authenticationToken">Authentication token to be sent in the authentication header.</param>
+        /// <param name="endpoint">URI of the portfolio events endpoint.</param>
+        /// <param name="portfolioId">ID of the portfolio to retrieve the events from.</param>
+        /// <param name="startDate">Date to start retrieving events from.</param>
+        /// <returns>Number of portfolio events.</returns>
+        Task<int> GetPortfolioEventsCount(string authenticationToken, string endpoint, string portfolioId, string startDate);
 
         /// <summary>
         /// Calls the UpdateEventRules method in the repository layer.

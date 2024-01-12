@@ -34,6 +34,12 @@ namespace CreditsafeConnect.Repository
             return await this.portfolioEventHttpClient.GetAllPortfolioEvents(getAllPortfolioEventsRequest);
         }
 
+        /// <inheritdoc cref="IPortfolioEventRepository.GetPortfolioEventsCount"/>
+        public async Task<int> GetPortfolioEventsCount(Request getPortfolioEventsCountRequest)
+        {
+            return await this.portfolioEventHttpClient.GetPortfolioEventsCount(getPortfolioEventsCountRequest);
+        }
+
         /// <inheritdoc cref="IPortfolioEventRepository.UpdateEventRules"/>
         public async Task UpdateEventRules(Request updateEventRulesRequest)
         {
