@@ -21,8 +21,10 @@ namespace CreditsafeConnect.Service
         {
             object login = new
             {
-                Resources.Username,
-                Resources.Password,
+                // Resources.Username,
+                // Resources.Password,
+                username = "Multitube",
+                password = "Multitube01",
             };
 
             RequestBuilder requestBuilder = new RequestBuilder();

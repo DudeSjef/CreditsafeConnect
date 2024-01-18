@@ -12,11 +12,6 @@ namespace CreditsafeConnect.Models.CreditReportModels
     public class General
     {
         /// <summary>
-        /// Gets or sets the company's language.
-        /// </summary>
-        public string Language { get; set; }
-
-        /// <summary>
         /// Gets or sets an object containing information about the company's visiting address.
         /// </summary>
         public CreditReportAddress VisitingAddress { get; set; }

@@ -25,6 +25,7 @@ namespace CreditsafeConnect.Controllers
         /// <param name="authenticationToken">Authentication token to be sent in the authentication header.</param>
         /// <param name="endpoint">URI of the portfolio events endpoint.</param>
         /// <param name="portfolioId">ID of the portfolio to retrieve the events from.</param>
+        /// <param name="page">Page number.</param>
         /// <param name="startDate">Date to start retrieving events from.</param>
         /// <param name="sortBy">Field to sort the results by. Default is eventDate.</param>
         /// <param name="sortDir">Direction to sort the results in. Default is descending.</param>
@@ -32,7 +33,7 @@ namespace CreditsafeConnect.Controllers
         /// <exception cref="ArgumentException">
         /// Thrown when one of the parameters has an illegal value.
         /// </exception>
-        public async Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string startDate = null, string sortBy = "eventDate", string sortDir = "desc")
+        public async Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, int page = 0, string startDate = null, string sortBy = "eventDate", string sortDir = "desc")
         {
             if (string.IsNullOrWhiteSpace(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
             if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");
@@ -40,7 +41,29 @@ namespace CreditsafeConnect.Controllers
             if (string.IsNullOrWhiteSpace(startDate))
                 startDate = DateTime.Now.Subtract(TimeSpan.FromDays(1)).ToString("s");
 
-            return await this.portfolioEventService.GetAllPortfolioEvents(authenticationToken, endpoint, portfolioId, sortBy, sortDir, startDate);
+            return await this.portfolioEventService.GetAllPortfolioEvents(authenticationToken, endpoint, portfolioId, sortBy, sortDir, startDate, page);
+        }
+
+        /// <summary>
+        /// Retrieves the number of portfolio events.
+        /// </summary>
+        /// <param name="authenticationToken">Authentication token to be sent in the authentication header.</param>
+        /// <param name="endpoint">URI of the portfolio events endpoint.</param>
+        /// <param name="portfolioId">ID of the portfolio to retrieve the events from.</param>
+        /// <param name="startDate">Date to start retrieving events from.</param>
+        /// <returns>Count of portfolio events.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when one of the parameters has an illegal value.
+        /// </exception>
+        public async Task<int> GetPortfolioEventsCount(string authenticationToken, string endpoint, string portfolioId, string startDate = null)
+        {
+            if (string.IsNullOrWhiteSpace(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
+            if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");
+            if (string.IsNullOrWhiteSpace(portfolioId)) throw new ArgumentException("Portfolio ID cannot be empty.");
+            if (string.IsNullOrWhiteSpace(startDate))
+                startDate = DateTime.Now.Subtract(TimeSpan.FromDays(1)).ToString("s");
+
+            return await this.portfolioEventService.GetPortfolioEventsCount(authenticationToken, endpoint, portfolioId, startDate);
         }
 
         /// <summary>

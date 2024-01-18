@@ -48,6 +48,20 @@ namespace CreditsafeConnect.Service.HttpClients
             return portfolioEvents?.ToObject<List<PortfolioEvent>>();
         }
 
+        /// <inheritdoc cref="IPortfolioEventHttpClient.GetPortfolioEventsCount"/>.
+        public async Task<int> GetPortfolioEventsCount(Request getPortfolioEventsCountRequest)
+        {
+            this.httpClient.DefaultRequestHeaders.Authorization = getPortfolioEventsCountRequest.AuthenticationHeader;
+
+            HttpResponseMessage response = await this.httpClient.GetAsync(getPortfolioEventsCountRequest.EndpointUri + getPortfolioEventsCountRequest.PathParameters + getPortfolioEventsCountRequest.RequestParameters);
+
+            response.EnsureSuccessStatusCode();
+
+            JObject jsonJObject = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+
+            return int.TryParse(jsonJObject.SelectToken("totalCount")?.Value<string>(), out int eventsCount) ? eventsCount : 0;
+        }
+
         /// <inheritdoc cref="IPortfolioEventHttpClient.UpdateEventRules"/>
         public async Task UpdateEventRules(Request updateEventRulesRequest)
         {

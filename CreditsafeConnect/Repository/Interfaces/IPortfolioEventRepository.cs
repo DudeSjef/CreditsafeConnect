@@ -22,6 +22,13 @@ namespace CreditsafeConnect.Repository.Interfaces
         Task<List<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest);
 
         /// <summary>
+        /// Retrieves the number of portfolio events.
+        /// </summary>
+        /// <param name="getPortfolioEventsCountRequest">Request object with portfolio event endpoint and portfolio ID.</param>
+        /// <returns>Number of portfolio events.</returns>
+        Task<int> GetPortfolioEventsCount(Request getPortfolioEventsCountRequest);
+
+        /// <summary>
         /// Calls the <see cref="Service.HttpClients.PortfolioEventHttpClient.UpdateEventRules"/> method in the <see cref="Service.HttpClients.PortfolioEventHttpClient"/>.
         /// </summary>
         /// <param name="updateEventRulesRequest">Request object with portfolio ID, country code, and event rule settings.</param>
