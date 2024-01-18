@@ -17,5 +17,9 @@ namespace CreditsafeConnect.Models.PortfolioEventModels
         public string OldValue { get; set; }
 
         public int RuleCode { get; set; }
+
+        public string RuleName { get; set; }
+
+        public string LocalEventCode { get; set; }
     }
 }
