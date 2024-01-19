@@ -22,6 +22,11 @@ namespace CreditsafeConnect.Models.CreditReportModels
         public DateTime RegistrationDate { get; set; }
 
         /// <summary>
+        /// Gets or sets the company's registration location.
+        /// </summary>
+        public string StatutoryAddress { get; set; }
+
+        /// <summary>
         /// Gets or sets an object containing information about the company's main activity.
         /// </summary>
         public MainActivity MainActivity { get; set; }

@@ -45,8 +45,6 @@ namespace CreditsafeConnect.Service
         {
             General general = new General
             {
-                PostalAddress = report.ContactInformation.OtherAddresses?
-                    .FirstOrDefault(address => !string.IsNullOrWhiteSpace(address.Type) && Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)),
                 PhoneNumber = report.ContactInformation.MainAddress.Telephone,
             };
 
@@ -61,6 +59,9 @@ namespace CreditsafeConnect.Service
             {
                 general.VisitingAddress = null;
             }
+
+            general.PostalAddress = report.ContactInformation.OtherAddresses?
+                .FirstOrDefault(address => !string.IsNullOrWhiteSpace(address.Type) && Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase));
 
             if (report.ContactInformation.EmailAddresses?.Length > 0)
             {
@@ -88,6 +89,7 @@ namespace CreditsafeConnect.Service
             {
                 RegistrationNumber = report.CompanySummary.CompanyRegistrationNumber,
                 RegistrationDate = report.CompanyIdentification.BasicInformation.CompanyRegistrationDate,
+                StatutoryAddress = report.AdditionalInformation.Misc.StatutaireSeal,
                 MainActivity = report.CompanySummary.MainActivity,
                 CreditScore = report.CompanySummary.CreditRating?.CommonValue,
                 Currency = report.CompanySummary.CreditRating?.CreditLimit.Currency ?? "EUR",
