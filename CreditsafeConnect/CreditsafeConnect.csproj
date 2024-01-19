@@ -108,6 +108,7 @@
     <Compile Include="Controllers\CreditReportController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
     <Compile Include="Controllers\PortfolioEventController.cs" />
+    <Compile Include="Models\AuthorizationException.cs" />
     <Compile Include="Models\CompanyModels\Address.cs" />
     <Compile Include="Models\AuthenticationToken.cs" />
     <Compile Include="Models\CompanyModels\Company.cs" />
