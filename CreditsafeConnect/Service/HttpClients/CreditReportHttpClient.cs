@@ -5,6 +5,7 @@
 namespace CreditsafeConnect.Service.HttpClients
 {
     using System;
+    using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
@@ -37,6 +38,11 @@ namespace CreditsafeConnect.Service.HttpClients
 
             HttpResponseMessage response =
                 await this.httpClient.GetAsync(getCreditReportRequest.EndpointUri + getCreditReportRequest.PathParameters + getCreditReportRequest.RequestParameters);
+
+            if (response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                throw new AuthorizationException();
+            }
 
             response.EnsureSuccessStatusCode();
 
