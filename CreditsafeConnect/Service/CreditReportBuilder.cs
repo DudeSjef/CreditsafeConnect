@@ -53,6 +53,17 @@ namespace CreditsafeConnect.Service
                 string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.PostalCode) ||
                 string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.Country))
             {
+                if (!string.IsNullOrEmpty(report.ContactInformation.MainAddress?.AdditionToAddress))
+                {
+                    if (Regex.IsMatch(report.ContactInformation.MainAddress.AdditionToAddress, report.ContactInformation.MainAddress.HouseNumber, RegexOptions.IgnoreCase))
+                    {
+                        report.ContactInformation.MainAddress.AdditionToAddress = Regex
+                            .Replace(report.ContactInformation.MainAddress.AdditionToAddress,
+                                report.ContactInformation.MainAddress.HouseNumber, string.Empty,
+                                RegexOptions.IgnoreCase).Trim();
+                    }
+                }
+
                 general.VisitingAddress = report.ContactInformation.MainAddress;
             }
             else
@@ -62,6 +73,15 @@ namespace CreditsafeConnect.Service
 
             general.PostalAddress = report.ContactInformation.OtherAddresses?
                 .FirstOrDefault(address => !string.IsNullOrWhiteSpace(address.Type) && Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase));
+
+            if (!string.IsNullOrEmpty(general.PostalAddress?.AdditionToAddress))
+            {
+                if (Regex.IsMatch(general.PostalAddress.AdditionToAddress, general.PostalAddress.HouseNumber, RegexOptions.IgnoreCase))
+                {
+                    general.PostalAddress.AdditionToAddress = Regex.Replace(general.PostalAddress.AdditionToAddress,
+                        general.PostalAddress.HouseNumber, string.Empty, RegexOptions.IgnoreCase).Trim();
+                }
+            }
 
             if (report.ContactInformation.EmailAddresses?.Length > 0)
             {

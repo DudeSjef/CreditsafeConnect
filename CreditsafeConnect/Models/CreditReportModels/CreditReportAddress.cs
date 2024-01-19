@@ -2,7 +2,7 @@
 // Copyright (c) Multitube Engineering B.V. All rights reserved.
 // </copyright>
 
-namespace CreditsafeConnect.Models.CreditReportModels.Internal
+namespace CreditsafeConnect.Models.CreditReportModels
 {
     /// <summary>
     /// A class containing information about a company's address.
@@ -23,6 +23,11 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         /// Gets or sets the house number.
         /// </summary>
         public string HouseNumber { get; set; }
+
+        /// <summary>
+        /// Gets or sets the address addition.
+        /// </summary>
+        public string AdditionToAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the city.
