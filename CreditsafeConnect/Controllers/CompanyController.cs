@@ -32,7 +32,7 @@ namespace CreditsafeConnect.Controllers
         /// <exception cref="ArgumentException">
         /// Thrown when one of the parameters has an illegal value.
         /// </exception>
-        public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status = "", int pageSize = 20)
+        public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status = "", int pageSize = 50)
         {
             if (string.IsNullOrWhiteSpace(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
             if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");
