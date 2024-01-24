@@ -26,13 +26,13 @@ namespace CreditsafeConnect.Controllers
         /// <param name="endpoint">URI of the companies endpoint.</param>
         /// <param name="countries">Comma-separated list of two-letter country codes (ISO 3166-1 alpha-2) for the countries to search in.</param>
         /// <param name="name">Name of the company to be searched for.</param>
-        /// <param name="status">Status of the company to be searched for. The default value is <see cref="Status.Active"/>.</param>
+        /// <param name="status">Status of the company to be searched for. Omit parameter to search for all statuses.</param>
         /// <param name="pageSize">Number of companies to retrieve. Value should be between 1 and 100. The default value is 20.</param>
         /// <returns>List of <see cref="Company"/>.</returns>
         /// <exception cref="ArgumentException">
         /// Thrown when one of the parameters has an illegal value.
         /// </exception>
-        public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status = "Active", int pageSize = 20)
+        public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status = "", int pageSize = 20)
         {
             if (string.IsNullOrWhiteSpace(authenticationToken)) throw new ArgumentException("Authentication token cannot be empty.");
             if (string.IsNullOrWhiteSpace(endpoint)) throw new ArgumentException("Endpoint cannot be empty.");

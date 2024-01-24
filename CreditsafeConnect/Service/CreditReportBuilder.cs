@@ -48,12 +48,12 @@ namespace CreditsafeConnect.Service
                 PhoneNumber = report.ContactInformation.MainAddress.Telephone,
             };
 
-            if (!string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.Street) ||
-                string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.City) ||
-                string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.PostalCode) ||
-                string.IsNullOrWhiteSpace(report.ContactInformation.MainAddress?.Country))
+            if (!string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.Street) ||
+                string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.City) ||
+                string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.PostalCode) ||
+                string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.Country))
             {
-                if (!string.IsNullOrEmpty(report.ContactInformation.MainAddress?.AdditionToAddress))
+                if (!string.IsNullOrEmpty(report.ContactInformation?.MainAddress?.AdditionToAddress))
                 {
                     if (Regex.IsMatch(report.ContactInformation.MainAddress.AdditionToAddress, report.ContactInformation.MainAddress.HouseNumber, RegexOptions.IgnoreCase))
                     {
@@ -64,14 +64,14 @@ namespace CreditsafeConnect.Service
                     }
                 }
 
-                general.VisitingAddress = report.ContactInformation.MainAddress;
+                general.VisitingAddress = report.ContactInformation?.MainAddress;
             }
             else
             {
                 general.VisitingAddress = null;
             }
 
-            general.PostalAddress = report.ContactInformation.OtherAddresses?
+            general.PostalAddress = report.ContactInformation?.OtherAddresses?
                 .FirstOrDefault(address => !string.IsNullOrWhiteSpace(address.Type) && Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase));
 
             if (!string.IsNullOrEmpty(general.PostalAddress?.AdditionToAddress))
@@ -83,13 +83,13 @@ namespace CreditsafeConnect.Service
                 }
             }
 
-            if (report.ContactInformation.EmailAddresses?.Length > 0)
+            if (report.ContactInformation?.EmailAddresses?.Length > 0)
             {
                 general.Email = report.ContactInformation.EmailAddresses.FirstOrDefault(email =>
                     Regex.IsMatch(email, $"\\.{report.ContactInformation.MainAddress?.Country}", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.EmailAddresses.FirstOrDefault();
             }
 
-            if (report.ContactInformation.Websites?.Length > 0)
+            if (report.ContactInformation?.Websites?.Length > 0)
             {
                 general.Website = report.ContactInformation.Websites.FirstOrDefault(website =>
                     Regex.IsMatch(website, $"\\.{report.ContactInformation.MainAddress?.Country}", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)) ?? report.ContactInformation.Websites.FirstOrDefault();
@@ -107,16 +107,16 @@ namespace CreditsafeConnect.Service
         {
             Financial financial = new Financial
             {
-                RegistrationNumber = report.CompanySummary.CompanyRegistrationNumber,
+                RegistrationNumber = report.CompanySummary?.CompanyRegistrationNumber,
                 RegistrationDate = report.CompanyIdentification.BasicInformation.CompanyRegistrationDate,
-                StatutoryAddress = report.AdditionalInformation.Misc.StatutaireSeal,
-                MainActivity = report.CompanySummary.MainActivity,
-                CreditScore = report.CompanySummary.CreditRating?.CommonValue,
-                Currency = report.CompanySummary.CreditRating?.CreditLimit.Currency ?? "EUR",
-                VatNumber = report.CompanyIdentification.BasicInformation.VatRegistrationNumber,
+                StatutoryAddress = report.AdditionalInformation?.Misc?.StatutaireSeal,
+                MainActivity = report.CompanySummary?.MainActivity,
+                CreditScore = report.CompanySummary?.CreditRating?.CommonValue,
+                Currency = report.CompanySummary?.CreditRating?.CreditLimit?.Currency ?? "EUR",
+                VatNumber = report.CompanyIdentification?.BasicInformation?.VatRegistrationNumber,
             };
 
-            if (decimal.TryParse(report.CompanySummary.CreditRating?.CreditLimit?.Value, out decimal creditLimit))
+            if (decimal.TryParse(report.CompanySummary?.CreditRating?.CreditLimit?.Value, out decimal creditLimit))
             {
                 financial.CreditLimit = creditLimit;
             }
@@ -125,7 +125,7 @@ namespace CreditsafeConnect.Service
             {
                 // EORI Number = Country code + RSIN (if length < 9, keep APPENDING 0)
                 string rsin = report.AdditionalInformation.Misc.RsinNumber;
-                financial.EoriNumber = report.CompanySummary.Country + new string('0', 9 - rsin.Length > 0 ? 9 - rsin.Length : 0) + rsin;
+                financial.EoriNumber = report.CompanySummary?.Country + new string('0', 9 - rsin.Length > 0 ? 9 - rsin.Length : 0) + rsin;
             }
 
             financial.UltimateParent = report.GroupStructure?.UltimateParent;

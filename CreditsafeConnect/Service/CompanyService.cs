@@ -22,11 +22,15 @@ namespace CreditsafeConnect.Service
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>
             {
-                { nameof(countries), countries },
-                { nameof(name), name },
-                { nameof(status), status },
-                { nameof(pageSize), pageSize.ToString() },
+                { "countries", countries },
+                { "name", name },
+                { "pageSize", pageSize.ToString() },
             };
+
+            if (!string.IsNullOrWhiteSpace(status))
+            {
+                parameters.Add("status", status);
+            }
 
             RequestBuilder requestBuilder = new RequestBuilder();
             Request getCompaniesRequest = requestBuilder
