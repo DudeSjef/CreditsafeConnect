@@ -10,7 +10,7 @@ namespace CreditsafeConnect.Models
     /// <summary>
     /// Class with all information required to make HTTP requests.
     /// </summary>
-    internal class Request
+    public class Request
     {
         /// <summary>
         /// Gets or sets the URI of the endpoint.

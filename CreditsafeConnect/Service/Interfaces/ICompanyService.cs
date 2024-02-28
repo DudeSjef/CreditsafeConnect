@@ -5,6 +5,7 @@
 namespace CreditsafeConnect.Service.Interfaces
 {
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models.CompanyModels;
 
@@ -20,9 +21,10 @@ namespace CreditsafeConnect.Service.Interfaces
         /// <param name="endpoint">URI of the companies endpoint.</param>
         /// <param name="countries">Comma-separated list of two-letter countries codes (ISO 3166-1 alpha-2) for the countries to search in.</param>
         /// <param name="name">Name of the company to be searched for.</param>
+        /// <param name="city">City of the company to be searched in. Omit parameter to search in all cities.</param>
         /// <param name="status">Status of the company to be searched for. The default value is <see cref="Status.Active"/>.</param>
         /// <param name="pageSize">Number of companies to retrieve. Value should be between 1 and 100. The default value is 20.</param>
         /// <returns>List of <see cref="Company"/>.</returns>
-        Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status = "Active", int pageSize = 20);
+        Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, [Optional] string city, [Optional] string status, int pageSize = 20);
     }
 }

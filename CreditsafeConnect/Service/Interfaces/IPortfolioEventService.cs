@@ -25,7 +25,7 @@ namespace CreditsafeConnect.Service.Interfaces
         /// <param name="startDate">Date to start retrieving events from.</param>
         /// <param name="page">Page number.</param>
         /// <returns><see cref="List{PortfolioEvent}"/>.</returns>
-        Task<List<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string sortBy, string sortDir, string startDate, int page);
+        Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string sortBy, string sortDir, string startDate, int page);
 
         /// <summary>
         /// Retrieves the number of portfolio events.

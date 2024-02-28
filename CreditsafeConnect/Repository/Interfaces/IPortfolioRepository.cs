@@ -19,7 +19,7 @@ namespace CreditsafeConnect.Repository.Interfaces
         /// </summary>
         /// <param name="getPortfoliosByNameRequest">Request object with portfolios endpoint, and portfolio name to search for.</param>
         /// <returns><see cref="List{Portfolio}"/>.</returns>
-        Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest);
+        Task<IEnumerable<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest);
 
         /// <summary>
         /// Calls the <see cref="Service.HttpClients.PortfolioHttpClient.CreatePortfolio"/> method in the <see cref="Service.HttpClients.PortfolioHttpClient"/>.

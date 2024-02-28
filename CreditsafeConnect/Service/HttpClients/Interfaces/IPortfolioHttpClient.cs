@@ -12,14 +12,14 @@ namespace CreditsafeConnect.Service.HttpClients.Interfaces
     /// <summary>
     /// Class for handling portfolio HTTP requests.
     /// </summary>
-    internal interface IPortfolioHttpClient
+    public interface IPortfolioHttpClient
     {
         /// <summary>
         /// Retrieves all portfolios by name.
         /// </summary>
         /// <param name="getPortfoliosByNameRequest">Request object with portfolios endpoint and portfolio name.</param>
         /// <returns><see cref="List{Portfolio}"/>.</returns>
-        Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest);
+        Task<IEnumerable<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest);
 
         /// <summary>
         /// Creates a portfolio.

@@ -31,7 +31,7 @@ namespace CreditsafeConnect.Service.HttpClients
         }
 
         /// <inheritdoc cref="ICompanyHttpClient.GetCompanies"/>
-        public async Task<List<Company>> GetCompanies(Request getCompaniesRequest)
+        public async Task<IEnumerable<Company>> GetCompanies(Request getCompaniesRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getCompaniesRequest.AuthenticationHeader;
 

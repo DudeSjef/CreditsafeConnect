@@ -6,6 +6,7 @@ namespace CreditsafeConnect.Service.HttpClients
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace CreditsafeConnect.Service.HttpClients
     using Newtonsoft.Json.Linq;
 
     /// <inheritdoc cref="IPortfolioHttpClient"/>
-    internal class PortfolioHttpClient : IPortfolioHttpClient
+    public class PortfolioHttpClient : IPortfolioHttpClient
     {
         private readonly HttpClient httpClient;
 
@@ -24,7 +25,7 @@ namespace CreditsafeConnect.Service.HttpClients
         /// Initializes a new instance of the <see cref="PortfolioHttpClient"/> class.
         /// </summary>
         /// <param name="httpClient"><see cref="HttpClient"/> to be used for sending HTTP requests.</param>
-        internal PortfolioHttpClient(HttpClient httpClient)
+        public PortfolioHttpClient(HttpClient httpClient)
         {
             httpClient.BaseAddress = new Uri(Resources.Url);
 
@@ -32,7 +33,7 @@ namespace CreditsafeConnect.Service.HttpClients
         }
 
         /// <inheritdoc cref="IPortfolioHttpClient.GetPortfoliosByName"/>
-        public async Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
+        public async Task<IEnumerable<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getPortfoliosByNameRequest.AuthenticationHeader;
 
@@ -47,7 +48,7 @@ namespace CreditsafeConnect.Service.HttpClients
 
             JToken portfolios = data?.SelectToken("portfolios");
 
-            return portfolios?.ToObject<List<Portfolio>>();
+            return portfolios?.ToObject<List<Portfolio>>().AsEnumerable();
         }
 
         /// <inheritdoc cref="IPortfolioHttpClient.CreatePortfolio"/>

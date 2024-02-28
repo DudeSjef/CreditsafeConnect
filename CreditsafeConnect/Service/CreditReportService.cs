@@ -21,11 +21,11 @@ namespace CreditsafeConnect.Service
         private readonly ICreditReportRepository creditReportRepository = new CreditReportRepository();
 
         /// <inheritdoc cref="ICreditReportService.GetCreditReport"/>
-        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId, string country)
+        public async Task<CreditReportResult> GetCreditReport(string authenticationToken, string endpoint, string companyId)
         {
             Dictionary<string, string> requestParameters = null;
 
-            if (Regex.IsMatch(country, @"^de$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(companyId.Substring(0, 2), @"^de$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase))
             {
                 requestParameters = new Dictionary<string, string>()
                 {

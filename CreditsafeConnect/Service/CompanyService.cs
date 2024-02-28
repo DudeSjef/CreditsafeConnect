@@ -5,6 +5,7 @@
 namespace CreditsafeConnect.Service
 {
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using CreditsafeConnect.Models;
     using CreditsafeConnect.Models.CompanyModels;
@@ -18,7 +19,7 @@ namespace CreditsafeConnect.Service
         private readonly ICompanyRepository companiesRepository = new CompanyRepository();
 
         /// <inheritdoc cref="ICompanyService.GetCompanies"/>
-        public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, string status, int pageSize)
+        public async Task<IEnumerable<Company>> GetCompanies(string authenticationToken, string endpoint, string countries, string name, [Optional] string city, [Optional] string status, int pageSize)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>
             {
@@ -30,6 +31,11 @@ namespace CreditsafeConnect.Service
             if (!string.IsNullOrWhiteSpace(status))
             {
                 parameters.Add("status", status);
+            }
+
+            if (!string.IsNullOrWhiteSpace(city))
+            {
+                parameters.Add("city", city);
             }
 
             RequestBuilder requestBuilder = new RequestBuilder();
