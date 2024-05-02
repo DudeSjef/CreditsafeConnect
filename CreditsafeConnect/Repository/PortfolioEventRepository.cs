@@ -29,7 +29,7 @@ namespace CreditsafeConnect.Repository
         }
 
         /// <inheritdoc cref="IPortfolioEventRepository.GetAllPortfolioEvents"/>
-        public async Task<List<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest)
+        public async Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest)
         {
             return await this.portfolioEventHttpClient.GetAllPortfolioEvents(getAllPortfolioEventsRequest);
         }

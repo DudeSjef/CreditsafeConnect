@@ -19,6 +19,6 @@ namespace CreditsafeConnect.Service.HttpClients.Interfaces
         /// </summary>
         /// <param name="getCompaniesRequest">Request object with companies endpoint and company search criteria in the request parameters.</param>
         /// <returns>List of <see cref="Company"/>.</returns>
-        Task<List<Company>> GetCompanies(Request getCompaniesRequest);
+        Task<IEnumerable<Company>> GetCompanies(Request getCompaniesRequest);
     }
 }

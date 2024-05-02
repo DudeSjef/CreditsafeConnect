@@ -29,7 +29,7 @@ namespace CreditsafeConnect.Repository
         }
 
         /// <inheritdoc cref="IPortfolioRepository.GetPortfoliosByName"/>
-        public async Task<List<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
+        public async Task<IEnumerable<Portfolio>> GetPortfoliosByName(Request getPortfoliosByNameRequest)
         {
             return await this.portfolioHttpClient.GetPortfoliosByName(getPortfoliosByNameRequest);
         }

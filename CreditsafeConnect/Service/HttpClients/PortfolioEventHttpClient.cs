@@ -32,7 +32,7 @@ namespace CreditsafeConnect.Service.HttpClients
         }
 
         /// <inheritdoc cref="IPortfolioEventHttpClient.GetAllPortfolioEvents"/>
-        public async Task<List<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest)
+        public async Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest)
         {
             this.httpClient.DefaultRequestHeaders.Authorization = getAllPortfolioEventsRequest.AuthenticationHeader;
 

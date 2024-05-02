@@ -20,7 +20,7 @@ namespace CreditsafeConnect.Service.Interfaces
         /// <param name="endpoint">URI of the portfolios endpoint.</param>
         /// <param name="name">Name of the portfolio to search for.</param>
         /// <returns><see cref="List{Portfolio}"/>.</returns>
-        Task<List<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name);
+        Task<IEnumerable<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name);
 
         /// <summary>
         /// Calls the CreatePortfolio method in the repository layer.

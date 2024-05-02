@@ -35,6 +35,11 @@ namespace CreditsafeConnect.Models.CompanyModels
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the trading names.
+        /// </summary>
+        public string[] TradingNames { get; set; }
+
+        /// <summary>
         /// Gets or sets the company address.
         /// </summary>
         public Address Address { get; set; }

@@ -19,7 +19,7 @@ namespace CreditsafeConnect.Repository.Interfaces
         /// </summary>
         /// <param name="getAllPortfolioEventsRequest">Request object with portfolio events endpoint.</param>
         /// <returns><see cref="List{PortfolioEvent}"/>.</returns>
-        Task<List<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest);
+        Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(Request getAllPortfolioEventsRequest);
 
         /// <summary>
         /// Retrieves the number of portfolio events.

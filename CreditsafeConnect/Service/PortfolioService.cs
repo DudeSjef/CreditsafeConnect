@@ -18,7 +18,7 @@ namespace CreditsafeConnect.Service
         private readonly IPortfolioRepository portfolioRepository = new PortfolioRepository();
 
         /// <inheritdoc cref="IPortfolioService.GetPortfoliosByName"/>
-        public async Task<List<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name)
+        public async Task<IEnumerable<Portfolio>> GetPortfoliosByName(string authenticationToken, string endpoint, string name)
         {
             Dictionary<string, string> parameters = new Dictionary<string, string>
             {

@@ -18,7 +18,7 @@ namespace CreditsafeConnect.Service
         private readonly IPortfolioEventRepository portfolioEventRepository = new PortfolioEventRepository();
 
         /// <inheritdoc cref="IPortfolioEventService.GetAllPortfolioEvents"/>
-        public async Task<List<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string sortBy, string sortDir, string startDate, int page)
+        public async Task<IEnumerable<PortfolioEvent>> GetAllPortfolioEvents(string authenticationToken, string endpoint, string portfolioId, string sortBy, string sortDir, string startDate, int page)
         {
             Dictionary<string, string> requestParameters = new Dictionary<string, string>
             {
