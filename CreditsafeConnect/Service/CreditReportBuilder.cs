@@ -45,8 +45,48 @@ namespace CreditsafeConnect.Service
         {
             General general = new General
             {
-                PhoneNumber = report.ContactInformation.MainAddress.Telephone,
+                PhoneNumber = !string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.Telephone)
+                    ? report.ContactInformation.MainAddress.Telephone
+                    : report.AdditionalInformation?.Misc?.MobileNumber,
             };
+
+            if (report.AdditionalInformation?.TradingStyles?.Count > 0)
+            {
+                general.TradingName = report.AdditionalInformation.TradingStyles.First().TradingName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(general.PhoneNumber) && !general.PhoneNumber.StartsWith("+"))
+            {
+                string countryCode = string.Empty;
+                switch (report.ContactInformation?.MainAddress?.Country)
+                {
+                    case "NL":
+                        countryCode = "+31";
+                        break;
+                    case "BE":
+                        countryCode = "+32";
+                        break;
+                    case "GB":
+                        countryCode = "+44";
+                        break;
+                    case "FR":
+                        countryCode = "+33";
+                        break;
+                    case "DE":
+                        countryCode = "+49";
+                        break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(countryCode))
+                {
+                    while (general.PhoneNumber.StartsWith("0"))
+                    {
+                        general.PhoneNumber = general.PhoneNumber.Substring(1);
+                    }
+
+                    general.PhoneNumber = countryCode + general.PhoneNumber;
+                }
+            }
 
             if (!string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.Street) ||
                 string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.City) ||
@@ -111,10 +151,20 @@ namespace CreditsafeConnect.Service
                 RegistrationDate = report.CompanyIdentification.BasicInformation.CompanyRegistrationDate,
                 StatutoryAddress = report.AdditionalInformation?.Misc?.StatutaireSeal,
                 MainActivity = report.CompanySummary?.MainActivity,
-                CreditScore = report.CompanySummary?.CreditRating?.CommonValue,
                 Currency = report.CompanySummary?.CreditRating?.CreditLimit?.Currency ?? "EUR",
                 VatNumber = report.CompanyIdentification?.BasicInformation?.VatRegistrationNumber,
             };
+
+            if (!string.IsNullOrWhiteSpace(report.CompanySummary?.CreditRating?.ProviderDescription))
+            {
+                financial.CreditScore = report.CompanySummary.CreditRating.ProviderDescription.Contains("403")
+                    ? "403"
+                    : report.CompanySummary.CreditRating.CommonValue;
+            }
+            else
+            {
+                financial.CreditScore = report.CompanySummary?.CreditRating?.CommonValue;
+            }
 
             if (decimal.TryParse(report.CompanySummary?.CreditRating?.CreditLimit?.Value, out decimal creditLimit))
             {

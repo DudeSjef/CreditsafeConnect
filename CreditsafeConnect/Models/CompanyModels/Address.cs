@@ -4,6 +4,8 @@
 
 namespace CreditsafeConnect.Models.CompanyModels
 {
+    using System.Globalization;
+
     /// <summary>
     /// Class with company address information.
     /// </summary>

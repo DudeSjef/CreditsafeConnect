@@ -22,6 +22,11 @@ namespace CreditsafeConnect.Models.CreditReportModels
         public CreditReportAddress PostalAddress { get; set; }
 
         /// <summary>
+        /// Gets or set the compan's trading name.
+        /// </summary>
+        public string TradingName { get; set; }
+
+        /// <summary>
         /// Gets or sets the company's phone number.
         /// </summary>
         public string PhoneNumber { get; set; }
