@@ -4,6 +4,7 @@
 
 namespace CreditsafeConnect.Models.CreditReportModels
 {
+    using System;
     using System.Collections.Specialized;
     using System.Globalization;
     using System.Text.RegularExpressions;
@@ -70,12 +71,12 @@ namespace CreditsafeConnect.Models.CreditReportModels
             TextInfo textInfo = new CultureInfo("nl").TextInfo;
 
             this.Type = type;
-            this.Street = textInfo.ToTitleCase(street.ToLowerInvariant());
+            this.Street = !string.IsNullOrWhiteSpace(street) ? textInfo.ToTitleCase(street.ToLowerInvariant()) : string.Empty;
             this.HouseNumber = houseNumber;
             this.AdditionToAddress = additionToAddress;
-            this.City = textInfo.ToTitleCase(city.ToLowerInvariant());
+            this.City = !string.IsNullOrWhiteSpace(city) ? textInfo.ToTitleCase(city.ToLowerInvariant()) : string.Empty;
             this.PostalCode = Regex.IsMatch(postalCode, "^\\d{4}[a-z]{2}$", RegexOptions.IgnoreCase) ? postalCode.Insert(4, " ") : postalCode;
-            this.Province = textInfo.ToTitleCase(province.ToLowerInvariant());
+            this.Province = !string.IsNullOrWhiteSpace(province) ? textInfo.ToTitleCase(province.ToLowerInvariant()) : string.Empty;
             this.DirectMarketingOptOut = directMarketingOptOut;
             this.Telephone = telephone;
             this.Country = country;
