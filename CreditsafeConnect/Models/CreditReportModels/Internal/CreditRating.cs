@@ -25,6 +25,11 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         public ProviderValue ProviderValue { get; set; }
 
         /// <summary>
+        /// Gets or sets a description about the company's credit score.
+        /// </summary>
+        public string ProviderDescription { get; set; }
+
+        /// <summary>
         /// Gets or sets the number indicating the company's Probability of Default.
         /// </summary>
         public float PoD { get; set; }

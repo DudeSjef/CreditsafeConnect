@@ -10,6 +10,10 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
     public class Misc
     {
         /// <summary>
+        /// Gets or sets the mobile phone number
+        /// </summary>
+        public string MobileNumber { get; set; }
+        /// <summary>
         /// Gets or sets the RSIN number.
         /// </summary>
         public string RsinNumber { get; set; }

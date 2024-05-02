@@ -4,6 +4,10 @@
 
 namespace CreditsafeConnect.Models.CreditReportModels
 {
+    using System.Collections.Specialized;
+    using System.Globalization;
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// A class containing information about a company's address.
     /// </summary>
@@ -58,6 +62,24 @@ namespace CreditsafeConnect.Models.CreditReportModels
         /// Gets or sets the name of the country.
         /// </summary>
         public string Country { get; set; }
+
+        public CreditReportAddress(string type, string street, string houseNumber, string additionToAddress,
+            string city, string postalCode, string province, bool directMarketingOptOut, string telephone,
+            string country)
+        {
+            TextInfo textInfo = new CultureInfo("nl").TextInfo;
+
+            this.Type = type;
+            this.Street = textInfo.ToTitleCase(street.ToLowerInvariant());
+            this.HouseNumber = houseNumber;
+            this.AdditionToAddress = additionToAddress;
+            this.City = textInfo.ToTitleCase(city.ToLowerInvariant());
+            this.PostalCode = Regex.IsMatch(postalCode, "^\\d{4}[a-z]{2}$", RegexOptions.IgnoreCase) ? postalCode.Insert(4, " ") : postalCode;
+            this.Province = textInfo.ToTitleCase(province.ToLowerInvariant());
+            this.DirectMarketingOptOut = directMarketingOptOut;
+            this.Telephone = telephone;
+            this.Country = country;
+        }
 
         /// <summary>
         /// Overrides the default method for comparing two object of this class.

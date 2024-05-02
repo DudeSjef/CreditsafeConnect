@@ -4,6 +4,8 @@
 
 namespace CreditsafeConnect.Models.CreditReportModels.Internal
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A wrapper class for miscellaneous company information.
     /// </summary>
@@ -13,5 +15,10 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         /// Gets or sets an object containing miscellaneous company information.
         /// </summary>
         public Misc Misc { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of trading names.
+        /// </summary>
+        public List<TradingStyle> TradingStyles { get; set; }
     }
 }
