@@ -27,5 +27,10 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         /// Gets or sets the company's registration location.
         /// </summary>
         public string StatutaireSeal { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of employees the company has.
+        /// </summary>
+        public string EmployeeNumber { get; set; }
     }
 }

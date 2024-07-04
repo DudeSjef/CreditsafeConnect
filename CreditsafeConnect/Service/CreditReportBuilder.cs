@@ -93,7 +93,7 @@ namespace CreditsafeConnect.Service
                 string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.PostalCode) ||
                 string.IsNullOrWhiteSpace(report.ContactInformation?.MainAddress?.Country))
             {
-                if (!string.IsNullOrEmpty(report.ContactInformation?.MainAddress?.AdditionToAddress))
+                if (!string.IsNullOrEmpty(report.ContactInformation?.MainAddress?.AdditionToAddress) && !string.IsNullOrEmpty(report.ContactInformation?.MainAddress?.HouseNumber))
                 {
                     if (Regex.IsMatch(report.ContactInformation.MainAddress.AdditionToAddress, report.ContactInformation.MainAddress.HouseNumber, RegexOptions.IgnoreCase))
                     {
@@ -114,7 +114,7 @@ namespace CreditsafeConnect.Service
             general.PostalAddress = report.ContactInformation?.OtherAddresses?
                 .FirstOrDefault(address => !string.IsNullOrWhiteSpace(address.Type) && Regex.IsMatch(address.Type, @"postal", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase));
 
-            if (!string.IsNullOrEmpty(general.PostalAddress?.AdditionToAddress))
+            if (!string.IsNullOrEmpty(general.PostalAddress?.AdditionToAddress) && !string.IsNullOrEmpty(general.PostalAddress?.HouseNumber))
             {
                 if (Regex.IsMatch(general.PostalAddress.AdditionToAddress, general.PostalAddress.HouseNumber, RegexOptions.IgnoreCase))
                 {
@@ -181,8 +181,17 @@ namespace CreditsafeConnect.Service
             financial.UltimateParent = report.GroupStructure?.UltimateParent;
             financial.ImmediateParent = report.GroupStructure?.ImmediateParent;
 
-            string numberOfEmployees = report.OtherInformation?.EmployeesInformation?.OrderByDescending(
+            // Number of employee could be located in either one of two fields
+            string numberOfEmployees = string.Empty;
+            if (report.OtherInformation?.EmployeesInformation != null)
+            {
+                numberOfEmployees = report.OtherInformation.EmployeesInformation.OrderByDescending(
                 employeeInformation => employeeInformation.Year).FirstOrDefault()?.NumberOfEmployees;
+            }
+            else
+            {
+                numberOfEmployees = report.AdditionalInformation?.Misc?.EmployeeNumber;
+            }
 
             if (!string.IsNullOrWhiteSpace(numberOfEmployees))
             {
@@ -227,6 +236,12 @@ namespace CreditsafeConnect.Service
                 case string name when Regex.IsMatch(name, @"\b(SPRL|S\.?P\.?R\.?L\.?)\b", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase):
                     financial.LegalForm = "SPRL";
                     break;
+            }
+
+            if (report.ExtendedGroupStructure?.Count > 0)
+            {
+                financial.GroupStructureAffiliates = report.ExtendedGroupStructure.Count();
+                financial.GroupStructureCountries = report.ExtendedGroupStructure.Select(affiliate => affiliate.Country).Distinct().Count();
             }
 
             return financial;

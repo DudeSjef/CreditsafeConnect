@@ -75,5 +75,15 @@ namespace CreditsafeConnect.Models.CreditReportModels
         /// Gets or sets the company's legal form.
         /// </summary>
         public string LegalForm { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of affiliates.
+        /// </summary>
+        public int GroupStructureAffiliates { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of unique countries the company's affiliates are located in.
+        /// </summary>
+        public int GroupStructureCountries { get; set; }
     }
 }

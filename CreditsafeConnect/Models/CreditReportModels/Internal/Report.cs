@@ -4,6 +4,8 @@
 
 namespace CreditsafeConnect.Models.CreditReportModels.Internal
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A class containing all the information about a company's credit report.
     /// </summary>
@@ -43,5 +45,10 @@ namespace CreditsafeConnect.Models.CreditReportModels.Internal
         /// Gets or sets an object containing a collection of the company's parents.
         /// </summary>
         public GroupStructure GroupStructure { get; set; }
+
+        /// <summary>
+        /// Gets or sets an object containing a collection of the company's affiliates.
+        /// </summary>
+        public List<Parent> ExtendedGroupStructure { get; set; }
     }
 }
