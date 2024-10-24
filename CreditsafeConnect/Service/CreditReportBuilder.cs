@@ -52,7 +52,7 @@ namespace CreditsafeConnect.Service
 
             if (report.AdditionalInformation?.TradingStyles?.Count > 0)
             {
-                general.TradingName = report.AdditionalInformation.TradingStyles.First().TradingName;
+                general.TradingName = report.AdditionalInformation.TradingStyles[0].TradingName;
             }
 
             if (!string.IsNullOrWhiteSpace(general.PhoneNumber) && !general.PhoneNumber.StartsWith("+"))
@@ -148,6 +148,7 @@ namespace CreditsafeConnect.Service
             Financial financial = new Financial
             {
                 RegistrationNumber = report.CompanySummary?.CompanyRegistrationNumber,
+                BranchNumber = report.AdditionalInformation?.Misc?.BranchNumber,
                 RegistrationDate = report.CompanyIdentification.BasicInformation.CompanyRegistrationDate,
                 StatutoryAddress = report.AdditionalInformation?.Misc?.StatutaireSeal,
                 MainActivity = report.CompanySummary?.MainActivity,
@@ -240,7 +241,7 @@ namespace CreditsafeConnect.Service
 
             if (report.ExtendedGroupStructure?.Count > 0)
             {
-                financial.GroupStructureAffiliates = report.ExtendedGroupStructure.Count();
+                financial.GroupStructureAffiliates = report.ExtendedGroupStructure.Count;
                 financial.GroupStructureCountries = report.ExtendedGroupStructure.Select(affiliate => affiliate.Country).Distinct().Count();
             }
 

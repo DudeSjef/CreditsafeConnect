@@ -17,6 +17,11 @@ namespace CreditsafeConnect.Models.CreditReportModels
         public string RegistrationNumber { get; set; }
 
         /// <summary>
+        /// Gets or sets the company's branch number.
+        /// </summary>
+        public string BranchNumber { get; set; }
+
+        /// <summary>
         /// Gets or sets the company's registration date.
         /// </summary>
         public DateTime RegistrationDate { get; set; }

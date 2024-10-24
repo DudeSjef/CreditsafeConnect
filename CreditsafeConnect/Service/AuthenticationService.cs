@@ -17,12 +17,12 @@ namespace CreditsafeConnect.Service
         private readonly IAuthenticationRepository authenticationRepository = new AuthenticationRepository();
 
         /// <inheritdoc cref="IAuthenticationService.Authenticate"/>
-        public async Task<AuthenticationToken> Authenticate(string endpoint)
+        public async Task<AuthenticationToken> Authenticate(string endpoint, string username, string password)
         {
             object login = new
             {
-                Resources.Username,
-                Resources.Password,
+                username,
+                password,
             };
 
             RequestBuilder requestBuilder = new RequestBuilder();
